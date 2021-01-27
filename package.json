@@ -20,8 +20,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/e2e/jest-e2e.json --forceExit",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
-    "migration:run": "npm run typeorm -- migration:run",
-    "migration:generate": "npm run typeorm -- migration:generate -n migration",
+    "migration:run": "npm run build && npm run typeorm -- migration:run",
+    "migration:generate": "npm run build && npm run typeorm -- migration:generate -n migration",
     "migration:create": "npm run typeorm -- migration:create -n migration"
   },
   "dependencies": {
