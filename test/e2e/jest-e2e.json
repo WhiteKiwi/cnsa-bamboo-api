@@ -1,4 +1,5 @@
 {
+	"globalSetup": "<rootDir>/../global-setup/setup.ts",
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": ".",
   "testEnvironment": "node",
