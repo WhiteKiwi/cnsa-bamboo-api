@@ -4,11 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 
-import GetConfigModule from './config'
+import { getConfigModule } from './modules'
 
 @Module({
 	imports: [
-		GetConfigModule(),
+		getConfigModule(),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
 			useFactory: (configService: ConfigService) => ({

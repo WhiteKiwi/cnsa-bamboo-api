@@ -5,7 +5,7 @@ import request from 'supertest'
 import { AppService } from '../../src/app.service'
 import { AppController } from '../../src/app.controller'
 
-import GetConfigModule from '../../src/config'
+import { getConfigModule } from '../../src/modules'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
@@ -15,7 +15,7 @@ describe('AppController (e2e)', () => {
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [
-				GetConfigModule({ isTest: true }),
+				getConfigModule({ isTest: true }),
 				TypeOrmModule.forRootAsync({
 					imports: [ConfigModule],
 					useFactory: (configService: ConfigService) => ({
