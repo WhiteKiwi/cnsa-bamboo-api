@@ -26,12 +26,8 @@ describe('AppController (e2e)', () => {
 						username: configService.get('TYPEORM_USERNAME'),
 						password: configService.get('TYPEORM_PASSWORD'),
 
-						entities: [
-							__dirname + '../../server/src/entities/*.js',
-						],
-						migrations: [
-							__dirname + '../../server/src/migrations/*.js',
-						],
+						entities: [__dirname + '/../../src/entities/*.ts'],
+						migrations: [__dirname + '/../../src/migrations/*.ts'],
 						// This value must be false! - https://typeorm.io/#/connection-options/common-connection-options
 						synchronize: false,
 					}),
