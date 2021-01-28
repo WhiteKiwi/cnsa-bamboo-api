@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { getConfigModule } from './modules'
+import path from 'path'
+
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-
-import { getConfigModule } from './modules'
 
 @Module({
 	imports: [
@@ -19,8 +20,8 @@ import { getConfigModule } from './modules'
 				username: configService.get('TYPEORM_USERNAME'),
 				password: configService.get('TYPEORM_PASSWORD'),
 
-				entities: [__dirname + '/entities/*.js'],
-				migrations: [__dirname + '/migrations/*.js'],
+				entities: [path.join(__dirname, 'entities/*.js')],
+				migrations: [path.join(__dirname, 'migrations/*.js')],
 				// This value must be false! - https://typeorm.io/#/connection-options/common-connection-options
 				synchronize: false,
 			}),

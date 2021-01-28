@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
 import request from 'supertest'
-
-import { AppService } from '../../src/app.service'
-import { AppController } from '../../src/app.controller'
+import path from 'path'
 
 import { getConfigModule } from '../../src/modules'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+
+import { AppService } from '../../src/app.service'
+import { AppController } from '../../src/app.controller'
 
 describe('AppController (e2e)', () => {
 	let app: INestApplication
@@ -18,6 +19,7 @@ describe('AppController (e2e)', () => {
 				getConfigModule({ isTest: true }),
 				TypeOrmModule.forRootAsync({
 					imports: [ConfigModule],
+					inject: [ConfigService],
 					useFactory: (configService: ConfigService) => ({
 						type: 'mysql',
 						host: configService.get('TYPEORM_HOST'),
@@ -26,12 +28,15 @@ describe('AppController (e2e)', () => {
 						username: configService.get('TYPEORM_USERNAME'),
 						password: configService.get('TYPEORM_PASSWORD'),
 
-						entities: [__dirname + '/../../src/entities/*.ts'],
-						migrations: [__dirname + '/../../src/migrations/*.ts'],
+						entities: [
+							path.join(__dirname, '../../src/entities/*.ts'),
+						],
+						migrations: [
+							path.join(__dirname, '../../src/migrations/*.ts'),
+						],
 						// This value must be false! - https://typeorm.io/#/connection-options/common-connection-options
 						synchronize: false,
 					}),
-					inject: [ConfigService],
 				}),
 			],
 			controllers: [AppController],
