@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM mysql:8.0.22
 
 ENV MYSQL_ROOT_PASSWORD=TEST1234!
 ENV MYSQL_DATABASE=cnsabamboo
