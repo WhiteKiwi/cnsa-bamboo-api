@@ -19,8 +19,8 @@ import { getConfigModule } from './modules'
 				username: configService.get('TYPEORM_USERNAME'),
 				password: configService.get('TYPEORM_PASSWORD'),
 
-				entities: [__dirname + '../server/src/entities/*.js'],
-				migrations: [__dirname + '../server/src/entities/*.js'],
+				entities: [__dirname + 'entities/*.js'],
+				migrations: [__dirname + 'migrations/*.js'],
 				// This value must be false! - https://typeorm.io/#/connection-options/common-connection-options
 				synchronize: false,
 			}),

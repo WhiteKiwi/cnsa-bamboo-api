@@ -30,7 +30,7 @@ describe('AppController (e2e)', () => {
 							__dirname + '../../server/src/entities/*.js',
 						],
 						migrations: [
-							__dirname + '../../server/src/entities/*.js',
+							__dirname + '../../server/src/migrations/*.js',
 						],
 						// This value must be false! - https://typeorm.io/#/connection-options/common-connection-options
 						synchronize: false,
