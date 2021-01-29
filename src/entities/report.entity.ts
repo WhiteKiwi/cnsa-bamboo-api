@@ -1,30 +1,32 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 import { REPORT_STATUS } from '../utils/constants'
 
-@Entity()
+@Entity({ name: 'reports' })
 export class Report {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 
-	@Column('longtext', { nullable: false })
+	@Column('longtext')
 	content: string
 
 	@Column('enum', {
-		nullable: false,
 		enum: REPORT_STATUS,
 		default: REPORT_STATUS.REPORTED,
 	})
 	status: string
 
-	@Column('varchar', { nullable: false, length: 30 })
+	@Column('varchar', { name: 'reporter_ip', length: 30 })
 	reporterIp: string
 
 	@Column('timestamp', {
-		nullable: false,
+		name: 'reported_at',
 		default: () => 'CURRENT_TIMESTAMP',
 	})
 	reportedAt: Date
 
-	@Column('timestamp')
+	@Column('timestamp', {
+		name: 'updated_at',
+		default: () => 'CURRENT_TIMESTAMP',
+	})
 	updatedAt: Date
 }
