@@ -1,9 +1,17 @@
 export const PORT = 'PORT'
 export const ENVIRONMENT = 'ENVIRONMENT'
+export const TYPEORM = {
+	HOST: 'TYPEORM.HOST',
+	PORT: 'TYPEORM.PORT',
+	DATABASE: 'TYPEORM.DATABASE',
+	USERNAME: 'TYPEORM.USERNAME',
+	PASSWORD: 'TYPEORM.PASSWORD',
+}
 
 const constants = {
 	PORT,
 	ENVIRONMENT,
+	TYPEORM,
 }
 
 export default constants
