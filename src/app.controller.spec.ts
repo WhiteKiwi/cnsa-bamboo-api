@@ -2,7 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 
-import { getConfigModule } from './modules'
+import { getConfigModule, getTypeOrmModule } from './modules'
+import { ReportsModule } from './reports/reports.module'
 
 describe('AppController', () => {
 	let appController: AppController
@@ -10,7 +11,11 @@ describe('AppController', () => {
 
 	beforeEach(async () => {
 		const app: TestingModule = await Test.createTestingModule({
-			imports: [getConfigModule({ isTest: true })],
+			imports: [
+				getConfigModule({ isTest: true }),
+				getTypeOrmModule(),
+				ReportsModule,
+			],
 			controllers: [AppController],
 			providers: [AppService],
 		}).compile()
@@ -20,7 +25,7 @@ describe('AppController', () => {
 	})
 
 	describe('root', () => {
-		it('should return "Hello World!"', () => {
+		it('should return version of package', () => {
 			expect(appController.getVersion().version).toBe(
 				appService.getVersion(),
 			)
