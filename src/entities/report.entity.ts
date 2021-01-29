@@ -16,6 +16,9 @@ export class Report {
 	})
 	status: string
 
+	@Column('varchar', { nullable: false, length: 30 })
+	reporterIp: string
+
 	@Column('timestamp', {
 		nullable: false,
 		default: () => 'CURRENT_TIMESTAMP',
