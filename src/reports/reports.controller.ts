@@ -4,7 +4,7 @@ import { ReportsService } from './reports.service'
 import { Report } from '../entities'
 
 import { REPORT_STATUS } from '../utils/constants'
-import { UpperCasePipe } from '../pipes'
+import { upperCasePipe } from '../pipes'
 
 @Controller('reports')
 export class ReportsController {
@@ -12,7 +12,8 @@ export class ReportsController {
 
 	@Get()
 	async getReports(
-		@Query('status', new UpperCasePipe()) status?: REPORT_STATUS,
+		@Query('status', upperCasePipe)
+		status?: REPORT_STATUS,
 	): Promise<Report[]> {
 		return await this.reportsService.findReports({ status })
 	}
