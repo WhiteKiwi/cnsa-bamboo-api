@@ -22,6 +22,7 @@ import { AppService } from './app.service'
 
 				entities: [path.join(__dirname, 'entities/*.js')],
 				migrations: [path.join(__dirname, 'migrations/*.js')],
+				migrationsRun: true,
 				// This value must be false! - https://typeorm.io/#/connection-options/common-connection-options
 				synchronize: false,
 			}),

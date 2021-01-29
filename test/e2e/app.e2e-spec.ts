@@ -34,6 +34,7 @@ describe('AppController (e2e)', () => {
 						migrations: [
 							path.join(__dirname, '../../src/migrations/*.ts'),
 						],
+						migrationsRun: true,
 						// This value must be false! - https://typeorm.io/#/connection-options/common-connection-options
 						synchronize: false,
 					}),
