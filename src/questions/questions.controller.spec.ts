@@ -9,6 +9,7 @@ import { Question } from '../entities'
 
 describe('QuestionsController', () => {
 	let controller: QuestionsController
+	let service: QuestionsService
 	let questionRepository: Repository<Question>
 
 	beforeEach(async () => {
@@ -23,7 +24,16 @@ describe('QuestionsController', () => {
 		}).compile()
 
 		controller = module.get<QuestionsController>(QuestionsController)
+		service = module.get<QuestionsService>(QuestionsService)
 		questionRepository = getRepository(Question)
+	})
+
+	it('Should be get all question', async () => {
+		const questions = await controller.getAll()
+
+		const questionsInDb = await service.find()
+
+		expect(questions).toEqual(questionsInDb)
 	})
 
 	it('Should be create question', async () => {

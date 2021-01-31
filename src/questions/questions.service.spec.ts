@@ -24,6 +24,13 @@ describe('QuestionsService', () => {
 		questionRepository = getRepository(Question)
 	})
 
+	it('Should be get all questions', async () => {
+		const questions = await service.find()
+		const questionsInDb = await questionRepository.find()
+
+		expect(questions).toEqual(questionsInDb)
+	})
+
 	it('Should be create question', async () => {
 		const question = '감자의 별명은?'
 		await service.create({ content: question })
@@ -32,12 +39,5 @@ describe('QuestionsService', () => {
 
 		expect(data).not.toBeNull()
 		expect(data.content).toBe(question)
-	})
-
-	it('Should be get all questions', async () => {
-		const questions = await service.find()
-		const questionsInDb = await questionRepository.find()
-
-		expect(questions).toEqual(questionsInDb)
 	})
 })
