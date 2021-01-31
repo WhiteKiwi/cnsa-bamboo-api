@@ -41,8 +41,14 @@ describe('QuestionController (e2e)', () => {
 		const response = await request.get('/questions')
 		expect(response.status).toBe(HttpStatus.OK)
 
+		const receivedQuestions = response.body.map((question) => {
+			question.updatedAt = new Date(question.updatedAt)
+			question.createdAt = new Date(question.createdAt)
+			return question
+		})
+
 		const questions = await service.find()
-		expect(response.body).toEqual(questions)
+		expect(receivedQuestions).toEqual(questions)
 	})
 
 	it('/random (GET)', async () => {
