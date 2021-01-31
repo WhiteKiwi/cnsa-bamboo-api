@@ -13,8 +13,11 @@ export class Report {
 		enum: REPORT_STATUS,
 		default: REPORT_STATUS.REPORTED,
 	})
-	@Index()
+	@Index('status_index')
 	status: string
+
+	@Column('varchar', { length: 10 })
+	code: string
 
 	@Column('varchar', { name: 'reporter_ip', length: 30 })
 	reporterIp: string
@@ -23,13 +26,13 @@ export class Report {
 		name: 'reported_at',
 		default: () => 'CURRENT_TIMESTAMP',
 	})
-	@Index()
+	@Index('reported_at_index')
 	reportedAt: Date
 
 	@Column('timestamp', {
 		name: 'updated_at',
 		default: () => 'CURRENT_TIMESTAMP',
 	})
-	@Index()
+	@Index('updated_at_index')
 	updatedAt: Date
 }

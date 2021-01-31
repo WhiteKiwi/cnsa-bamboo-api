@@ -13,7 +13,7 @@ export class Question {
 	id: number
 
 	@Column('varchar', { length: 500, unique: true })
-	@Index()
+	@Index('content_index')
 	content: string
 
 	@OneToMany(() => Answer, (answer) => answer.question)
@@ -23,13 +23,13 @@ export class Question {
 		name: 'created_at',
 		default: () => 'CURRENT_TIMESTAMP',
 	})
-	@Index()
+	@Index('created_at_index')
 	createdAt: Date
 
 	@Column('timestamp', {
 		name: 'updated_at',
 		default: () => 'CURRENT_TIMESTAMP',
 	})
-	@Index()
+	@Index('updated_at_index')
 	updatedAt: Date
 }
