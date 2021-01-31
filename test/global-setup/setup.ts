@@ -52,6 +52,10 @@ export default async () => {
 			username: DEFAULT_TYPEORM.USERNAME,
 			password: DEFAULT_TYPEORM.PASSWORD,
 			entities: [path.join(__dirname, '../../server/src/entities/*.js')],
+			migrations: [
+				path.join(__dirname, '../../server/src/migrations/*.js'),
+			],
+			migrationsRun: true,
 		})
 
 		await connection.query('SET FOREIGN_KEY_CHECKS = 0')
@@ -73,6 +77,10 @@ export default async () => {
 			username: DEFAULT_TYPEORM.USERNAME,
 			password: DEFAULT_TYPEORM.PASSWORD,
 			entities: [path.join(__dirname, '../../server/src/entities/*.js')],
+			migrations: [
+				path.join(__dirname, '../../server/src/migrations/*.js'),
+			],
+			migrationsRun: true,
 		})
 	}
 
