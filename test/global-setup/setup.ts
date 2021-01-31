@@ -8,6 +8,9 @@ import {
 	teardownDockerContainer,
 } from '../utils'
 
+import { createConnection } from 'typeorm'
+import { DEFAULT_TYPEORM } from '../../src/config/default'
+
 const IMAGE_NAME = `bamboo-test-db`
 const CONTAINER_NAME = 'bamboo-test-db'
 
@@ -39,7 +42,25 @@ export default async () => {
 		console.log('Initialize DB...')
 
 		// DB 초기화
-		// TODO: 모든 테이블 초기화
+		const connection = await createConnection({
+			type: 'mysql',
+			host: DEFAULT_TYPEORM.HOST,
+			port: DEFAULT_TYPEORM.PORT,
+			database: DEFAULT_TYPEORM.DATABASE,
+			username: DEFAULT_TYPEORM.USERNAME,
+			password: DEFAULT_TYPEORM.PASSWORD,
+			entities: [path.join(__dirname, '../../server/src/entities/*.js')],
+		})
+
+		await connection.query('SET FOREIGN_KEY_CHECKS = 0')
+
+		for (const entity of connection.entityMetadatas) {
+			const repository = await connection.getRepository(entity.name)
+			await repository.query(`TRUNCATE TABLE \`${entity.tableName}\``)
+		}
+
+		await connection.query('SET FOREIGN_KEY_CHECKS = 1')
+		connection.close()
 	}
 
 	// Insert mock data
