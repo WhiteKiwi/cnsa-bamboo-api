@@ -10,6 +10,7 @@ import { AppController } from '../../src/app.controller'
 describe('AppController (e2e)', () => {
 	let app: INestApplication
 	let request: supertest.SuperTest<supertest.Test>
+	let controller: AppController
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -21,13 +22,13 @@ describe('AppController (e2e)', () => {
 		app = moduleFixture.createNestApplication()
 		await app.init()
 		request = supertest(app.getHttpServer())
+
+		controller = moduleFixture.get<AppController>(AppController)
 	})
 
 	it('/ (GET)', async () => {
 		const response = await request.get('/')
 		expect(response.status).toBe(HttpStatus.OK)
-		expect(response.body).toEqual({
-			version: '0.0.1',
-		})
+		expect(response.body).toEqual(controller.getVersion())
 	})
 })
