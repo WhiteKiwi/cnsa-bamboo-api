@@ -28,8 +28,9 @@ describe('QuestionsService', () => {
 		const question = '감자의 별명은?'
 		await service.create({ content: question })
 
-		const data = await questionRepository.find({ content: question })
+		const data = await questionRepository.findOne({ content: question })
 
 		expect(data).not.toBeNull()
+		expect(data.content).toBe(question)
 	})
 })
