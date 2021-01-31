@@ -11,10 +11,10 @@ export class ReportsController {
 	constructor(private readonly reportsService: ReportsService) {}
 
 	@Get()
-	async getReports(
+	async find(
 		@Query('status', upperCasePipe)
 		status?: REPORT_STATUS,
 	): Promise<Report[]> {
-		return await this.reportsService.findReports({ status })
+		return await this.reportsService.find({ status })
 	}
 }

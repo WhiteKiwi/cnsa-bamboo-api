@@ -12,7 +12,7 @@ export class ReportsService {
 		private readonly reportRepository: Repository<Report>,
 	) {}
 
-	async findReports({ status }): Promise<Report[]> {
+	async find({ status }): Promise<Report[]> {
 		if (!isEmpty(status)) {
 			return await this.reportRepository.find({ status })
 		}
