@@ -15,6 +15,19 @@ export class QuestionsService {
 		return await this.questionRepository.find()
 	}
 
+	async getRandomOne() {
+		const data = await this.questionRepository
+			.createQueryBuilder()
+			.select('question.id')
+			.from(Question, 'question')
+			.getMany()
+		const randomIndex = Math.floor(Math.random() * data.length)
+
+		return await this.questionRepository.findOne({
+			id: data[randomIndex].id,
+		})
+	}
+
 	async create({ content }) {
 		await this.questionRepository.insert({ content })
 	}
