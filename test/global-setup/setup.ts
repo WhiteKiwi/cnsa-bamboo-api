@@ -7,14 +7,16 @@ import {
 	sleep,
 	teardownDockerContainer,
 } from '../utils'
+import { isEmpty } from 'lodash'
 
-import { createConnection } from 'typeorm'
 import { DEFAULT_TYPEORM } from '../../src/config/default'
+import { Connection, createConnection } from 'typeorm'
 
 const IMAGE_NAME = `bamboo-test-db`
 const CONTAINER_NAME = 'bamboo-test-db'
 
 export default async () => {
+	let connection: Connection
 	console.log('Start to set mocking data. Set up the db')
 
 	if (!(await isImageExist(IMAGE_NAME))) {
@@ -42,7 +44,7 @@ export default async () => {
 		console.log('Initialize DB...')
 
 		// DB 초기화
-		const connection = await createConnection({
+		connection = await createConnection({
 			type: 'mysql',
 			host: DEFAULT_TYPEORM.HOST,
 			port: DEFAULT_TYPEORM.PORT,
@@ -60,11 +62,28 @@ export default async () => {
 		}
 
 		await connection.query('SET FOREIGN_KEY_CHECKS = 1')
-		connection.close()
+	}
+
+	if (isEmpty(connection)) {
+		connection = await createConnection({
+			type: 'mysql',
+			host: DEFAULT_TYPEORM.HOST,
+			port: DEFAULT_TYPEORM.PORT,
+			database: DEFAULT_TYPEORM.DATABASE,
+			username: DEFAULT_TYPEORM.USERNAME,
+			password: DEFAULT_TYPEORM.PASSWORD,
+			entities: [path.join(__dirname, '../../server/src/entities/*.js')],
+		})
 	}
 
 	// Insert mock data
-	// TODO: Mock data 생성
+	await connection
+		.getRepository('questions')
+		.insert({ content: '감자는 귀엽습니까?' })
+	await connection
+		.getRepository('questions')
+		.insert({ content: '감자는 연애를 할 수 있습니까?' })
 
 	console.log('Setup complete!')
+	connection.close()
 }

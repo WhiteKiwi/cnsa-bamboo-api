@@ -31,6 +31,21 @@ describe('QuestionsService', () => {
 		expect(questions).toEqual(questionsInDb)
 	})
 
+	it('Should be return one question randomly', async () => {
+		const question = await service.getRandomOne()
+
+		let diffenceCheck = false
+		for (let i = 0; i < 100; i++) {
+			const randomQuestion = await service.getRandomOne()
+			if (question.id !== randomQuestion.id) {
+				diffenceCheck = true
+				break
+			}
+		}
+
+		expect(diffenceCheck).toBe(true)
+	})
+
 	it('Should be create question', async () => {
 		const question = '감자의 별명은?'
 		await service.create({ content: question })
