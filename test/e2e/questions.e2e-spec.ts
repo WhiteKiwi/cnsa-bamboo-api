@@ -45,6 +45,23 @@ describe('QuestionController (e2e)', () => {
 		expect(response.body).toEqual(questions)
 	})
 
+	it('/random (GET)', async () => {
+		const { body: question } = await request.get('/questions/random')
+
+		let diffenceCheck = false
+		for (let i = 0; i < 100; i++) {
+			const { body: randomQuestion } = await request.get(
+				'/questions/random',
+			)
+			if (question.id !== randomQuestion.id) {
+				diffenceCheck = true
+				break
+			}
+		}
+
+		expect(diffenceCheck).toBe(true)
+	})
+
 	it('/ (POST)', async () => {
 		const question = '감자는 바보?'
 		const response = await request.post('/questions').send({ question })
