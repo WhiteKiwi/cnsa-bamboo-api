@@ -12,6 +12,8 @@ import { isEmpty } from 'lodash'
 import { DEFAULT_TYPEORM } from '../../src/config/default'
 import { Connection, createConnection } from 'typeorm'
 
+jest.setTimeout(3 * 60 * 1000)
+
 const IMAGE_NAME = `bamboo-test-db`
 const CONTAINER_NAME = 'bamboo-test-db'
 
