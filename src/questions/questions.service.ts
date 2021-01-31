@@ -11,6 +11,10 @@ export class QuestionsService {
 		private readonly questionRepository: Repository<Question>,
 	) {}
 
+	async find() {
+		return await this.questionRepository.find()
+	}
+
 	async create({ content }) {
 		await this.questionRepository.insert({ content })
 	}
