@@ -3,6 +3,7 @@ import { QuestionsController } from './questions.controller'
 import { QuestionsService } from './questions.service'
 import { getConfigModule, getTypeOrmModule } from '../modules'
 import { sleep } from '../utils'
+import { res } from '../../test/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
@@ -12,11 +13,6 @@ describe('QuestionsController', () => {
 	let controller: QuestionsController
 	let service: QuestionsService
 	let questionRepository: Repository<Question>
-	const res = {
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		send: (text?: string) => {},
-		status: (code: number) => res,
-	}
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
