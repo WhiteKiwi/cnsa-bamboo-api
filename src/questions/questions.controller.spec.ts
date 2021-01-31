@@ -36,6 +36,21 @@ describe('QuestionsController', () => {
 		expect(questions).toEqual(questionsInDb)
 	})
 
+	it('Should be return one question randomly', async () => {
+		const question = await controller.getRandomOne()
+
+		let diffenceCheck = false
+		for (let i = 0; i < 100; i++) {
+			const randomQuestion = await controller.getRandomOne()
+			if (question.id !== randomQuestion.id) {
+				diffenceCheck = true
+				break
+			}
+		}
+
+		expect(diffenceCheck).toBe(true)
+	})
+
 	it('Should be create question', async () => {
 		const question = '감자의 키는?'
 		await controller.create(question)
