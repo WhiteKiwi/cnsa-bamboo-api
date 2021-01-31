@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm'
-import { REPORT_STATUS } from '../utils/constants'
+import { REPORT_STATUS } from '../utils'
 
 @Entity({ name: 'reports' })
 export class Report {

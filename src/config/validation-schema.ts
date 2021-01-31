@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi'
 import { DEFAULT_PORT, DEFAULT_TYPEORM } from './default'
 import { ENVIRONMENT } from './constants'
-import { ENVIRONMENT as ENV } from '../utils/constants'
+import { ENVIRONMENT as ENV } from '../utils'
 
 export default Joi.object({
 	PORT: Joi.number().empty('').default(DEFAULT_PORT),
