@@ -8,7 +8,7 @@ export class QuestionsController {
 
 	@Get()
 	async getAll() {
-		await this.reportsService.find()
+		return await this.reportsService.find()
 	}
 
 	@Post()
