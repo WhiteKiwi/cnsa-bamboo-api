@@ -8,6 +8,7 @@ import { AppService } from '../../src/app.service'
 import { AppController } from '../../src/app.controller'
 
 import { QuestionsModule } from '../../src/questions/questions.module'
+import { QuestionsService } from '../../src/questions/questions.service'
 import { Question } from '../../src/entities'
 import { getRepository, Repository } from 'typeorm'
 
@@ -15,6 +16,7 @@ describe('QuestionController (e2e)', () => {
 	let app: INestApplication
 	let request: supertest.SuperTest<supertest.Test>
 	let questionRepository: Repository<Question>
+	let service: QuestionsService
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -31,7 +33,16 @@ describe('QuestionController (e2e)', () => {
 		await app.init()
 		request = supertest(app.getHttpServer())
 
+		service = moduleFixture.get<QuestionsService>(QuestionsService)
 		questionRepository = getRepository(Question)
+	})
+
+	it('/ (GET)', async () => {
+		const response = await request.get('/questions')
+		expect(response.status).toBe(HttpStatus.OK)
+
+		const questions = await service.find()
+		expect(response.body).toEqual(questions)
 	})
 
 	it('/ (POST)', async () => {
