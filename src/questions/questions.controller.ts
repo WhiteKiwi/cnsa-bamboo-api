@@ -13,7 +13,7 @@ export class QuestionsController {
 	}
 
 	@Get('random')
-	async getRandomOne() {
+	async getRandomOne(): Promise<Question> {
 		return await this.reportsService.getRandomOne()
 	}
 

@@ -11,11 +11,11 @@ export class QuestionsService {
 		private readonly questionRepository: Repository<Question>,
 	) {}
 
-	async find() {
+	async find(): Promise<Question[]> {
 		return await this.questionRepository.find()
 	}
 
-	async getRandomOne() {
+	async getRandomOne(): Promise<Question> {
 		const data = await this.questionRepository
 			.createQueryBuilder()
 			.select('question.id')
