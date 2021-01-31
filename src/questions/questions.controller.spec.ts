@@ -12,6 +12,11 @@ describe('QuestionsController', () => {
 	let controller: QuestionsController
 	let service: QuestionsService
 	let questionRepository: Repository<Question>
+	const res = {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		send: (text?: string) => {},
+		status: (code: number) => res,
+	}
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -56,10 +61,16 @@ describe('QuestionsController', () => {
 
 	it('Should be create question', async () => {
 		const question = '감자의 키는?'
-		await controller.create(question)
+		await controller.create(question, res)
 
 		const data = await questionRepository.find({ content: question })
 
 		expect(data).not.toBeNull()
+	})
+
+	it('Should be return 409 Conflict', async () => {
+		const question = 'ADRFSGABVDFS'
+		await controller.create(question, res)
+		await controller.create(question, res)
 	})
 })

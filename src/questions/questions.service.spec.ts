@@ -4,7 +4,7 @@ import { getConfigModule, getTypeOrmModule } from '../modules'
 import { sleep } from '../utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { getRepository, Repository } from 'typeorm'
+import { getRepository, QueryFailedError, Repository } from 'typeorm'
 import { Question } from '../entities'
 
 describe('QuestionsService', () => {
@@ -57,5 +57,15 @@ describe('QuestionsService', () => {
 
 		expect(data).not.toBeNull()
 		expect(data.content).toBe(question)
+	})
+
+	it('Should be throw error: ER_DUP_ENTRY', async () => {
+		const question = 'GDFSGRHBTRB'
+		await service.create({ content: question })
+		try {
+			await service.create({ content: question })
+		} catch (e) {
+			expect(e.code).toBe('ER_DUP_ENTRY')
+		}
 	})
 })
