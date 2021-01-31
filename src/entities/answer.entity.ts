@@ -1,24 +1,16 @@
-import {
-	Entity,
-	Column,
-	PrimaryGeneratedColumn,
-	ManyToOne,
-	JoinColumn,
-} from 'typeorm'
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm'
 import { Question } from './question.entity'
 
 @Entity({ name: 'answers' })
 export class Answer {
-	@PrimaryGeneratedColumn('increment')
-	id: number
-
 	@ManyToOne(() => Question, (question) => question.answers, {
 		onDelete: 'CASCADE',
+		primary: true,
 	})
 	@JoinColumn({ name: 'question_id' })
 	question: Question
 
-	@Column('varchar', { length: 100 })
+	@Column('varchar', { length: 100, primary: true })
 	answer: string
 
 	@Column('timestamp', {

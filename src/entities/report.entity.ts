@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm'
 import { REPORT_STATUS } from '../utils/constants'
 
 @Entity({ name: 'reports' })
@@ -13,6 +13,7 @@ export class Report {
 		enum: REPORT_STATUS,
 		default: REPORT_STATUS.REPORTED,
 	})
+	@Index()
 	status: string
 
 	@Column('varchar', { name: 'reporter_ip', length: 30 })
@@ -22,11 +23,13 @@ export class Report {
 		name: 'reported_at',
 		default: () => 'CURRENT_TIMESTAMP',
 	})
+	@Index()
 	reportedAt: Date
 
 	@Column('timestamp', {
 		name: 'updated_at',
 		default: () => 'CURRENT_TIMESTAMP',
 	})
+	@Index()
 	updatedAt: Date
 }
