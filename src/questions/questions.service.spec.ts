@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsService } from './questions.service'
 import { getConfigModule, getTypeOrmModule } from '../modules'
+import { sleep } from '../utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
@@ -41,6 +42,8 @@ describe('QuestionsService', () => {
 				diffenceCheck = true
 				break
 			}
+
+			await sleep(500)
 		}
 
 		expect(diffenceCheck).toBe(true)
