@@ -18,6 +18,7 @@ export function getTypeOrmModule() {
 			entities: [path.join(__dirname, '../entities/*.{ts,js}')],
 			migrations: [path.join(__dirname, '../migrations/*.{ts,js}')],
 			migrationsRun: true,
+			keepConnectionAlive: true,
 			// This value must be false! - https://typeorm.io/#/connection-options/common-connection-options
 			synchronize: false,
 		}),
