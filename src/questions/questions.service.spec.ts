@@ -24,7 +24,7 @@ describe('QuestionsService', () => {
 
 	it('Should be create question', async () => {
 		const question = '감자의 별명은?'
-		await service.insert({ content: question })
+		await service.create({ content: question })
 
 		const questionRepository = getRepository(Question)
 		const data = await questionRepository.find({ content: question })

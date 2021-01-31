@@ -11,7 +11,7 @@ export class QuestionsService {
 		private readonly questionRepository: Repository<Question>,
 	) {}
 
-	async insert({ content }) {
+	async create({ content }) {
 		await this.questionRepository.insert({ content })
 	}
 }
