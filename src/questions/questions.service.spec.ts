@@ -3,11 +3,12 @@ import { QuestionsService } from './questions.service'
 import { getConfigModule, getTypeOrmModule } from '../modules'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { getRepository, Repository } from 'typeorm'
 import { Question } from '../entities'
-import { getRepository } from 'typeorm'
 
 describe('QuestionsService', () => {
 	let service: QuestionsService
+	let questionRepository: Repository<Question>
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -20,13 +21,13 @@ describe('QuestionsService', () => {
 		}).compile()
 
 		service = module.get<QuestionsService>(QuestionsService)
+		questionRepository = getRepository(Question)
 	})
 
 	it('Should be create question', async () => {
 		const question = '감자의 별명은?'
 		await service.create({ content: question })
 
-		const questionRepository = getRepository(Question)
 		const data = await questionRepository.find({ content: question })
 
 		expect(data).not.toBeNull()

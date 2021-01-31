@@ -7,7 +7,7 @@ export class QuestionsController {
 	constructor(private readonly reportsService: QuestionsService) {}
 
 	@Post()
-	async createQuestion(@Param('question') question: string) {
+	async create(@Param('question') question: string) {
 		await this.reportsService.create({ content: question })
 	}
 }
