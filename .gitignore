@@ -31,3 +31,5 @@ lerna-debug.log*
 
 # ENV file
 /.env
+docker/server/.env
+docker/server/GITHUB_ACCESS_TOKEN
