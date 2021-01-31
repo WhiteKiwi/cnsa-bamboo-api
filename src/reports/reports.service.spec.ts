@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { ReportsService } from './reports.service'
 import { getConfigModule, getTypeOrmModule } from '../modules'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { ReportsController } from './reports.controller'
-import { ReportsService } from './reports.service'
 import { Report } from '../entities'
 
 describe('ReportsService', () => {
@@ -16,7 +15,6 @@ describe('ReportsService', () => {
 				getTypeOrmModule(),
 				TypeOrmModule.forFeature([Report]),
 			],
-			controllers: [ReportsController],
 			providers: [ReportsService],
 		}).compile()
 
