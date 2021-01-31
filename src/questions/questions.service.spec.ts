@@ -4,7 +4,7 @@ import { getConfigModule, getTypeOrmModule } from '../modules'
 import { sleep } from '../utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { getRepository, QueryFailedError, Repository } from 'typeorm'
+import { getRepository, Repository } from 'typeorm'
 import { Question } from '../entities'
 
 describe('QuestionsService', () => {
