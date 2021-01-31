@@ -80,4 +80,17 @@ describe('QuestionController (e2e)', () => {
 		expect(data).not.toBeNull()
 		expect(data.content).toBe(question)
 	})
+
+	it('/ (POST) - Should be return 409 Conflict', async () => {
+		const question = 'GDFSBHIJID'
+		const firstResponse = await request
+			.post('/questions')
+			.send({ question })
+		expect(firstResponse.status).toBe(HttpStatus.CREATED)
+
+		const secondResponse = await request
+			.post('/questions')
+			.send({ question })
+		expect(secondResponse.status).toBe(HttpStatus.CONFLICT)
+	})
 })
