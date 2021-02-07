@@ -35,7 +35,7 @@ describe('QuestionsController', () => {
 
 		const questionsInDb = await service.find()
 
-		expect(questions).toEqual({})
+		expect(questions).toEqual(questionsInDb)
 	})
 
 	it('Should be return one question randomly', async () => {
