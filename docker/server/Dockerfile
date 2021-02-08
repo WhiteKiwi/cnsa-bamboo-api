@@ -9,7 +9,8 @@ RUN apt-get install -y nodejs
 
 # Clone repository
 COPY GITHUB_ACCESS_TOKEN GITHUB_ACCESS_TOKEN
-RUN git clone https://whitekiwi:$(cat GITHUB_ACCESS_TOKEN)@github.com/whitekiwi/cnsa-bamboo-api.git
+ARG BRANCH
+RUN git clone -b $BRANCH --single-branch https://whitekiwi:$(cat GITHUB_ACCESS_TOKEN)@github.com/whitekiwi/cnsa-bamboo-api.git
 WORKDIR cnsa-bamboo-api
 
 # Start
