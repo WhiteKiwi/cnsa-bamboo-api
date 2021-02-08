@@ -53,7 +53,10 @@ describe('QuestionController (e2e)', () => {
 	})
 
 	it('/random (GET)', async () => {
-		const { body: question } = await request.get('/questions/random')
+		const { body: question, status } = await request.get(
+			'/questions/random',
+		)
+		expect(status).toBe(HttpStatus.OK)
 
 		let diffenceCheck = false
 		for (let i = 0; i < 100; i++) {
