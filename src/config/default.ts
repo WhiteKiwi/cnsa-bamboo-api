@@ -9,4 +9,5 @@ export const DEFAULT_TYPEORM = {
 
 export default {
 	DEFAULT_PORT,
+	DEFAULT_TYPEORM,
 }
