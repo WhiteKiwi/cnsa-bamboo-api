@@ -25,7 +25,8 @@
 		"migration:create": "npm run typeorm -- migration:create -n migration",
 		"deploy": "sh ./docker/server/deploy.sh",
 		"deploy:dev": "git checkout develop && sh ./docker/server/deploy.sh",
-		"deploy:prod": "git checkout main && sh ./docker/server/deploy.sh"
+		"deploy:prod": "git checkout main && sh ./docker/server/deploy.sh",
+		"deploy:node-server-base": "sh ./docker/server/deploy.sh"
 	},
 	"dependencies": {
 		"@hapi/joi": "^17.1.1",
