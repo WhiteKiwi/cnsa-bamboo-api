@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common'
 
 import { ReportsService } from './reports.service'
-import { Report } from '../entities'
+import { Report } from '../typeorm/entities'
 
 import { REPORT_STATUS } from '../utils'
 import { upperCasePipe } from '../pipes'

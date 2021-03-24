@@ -11,7 +11,7 @@ import { AppController } from '../../src/app.controller'
 import { QuestionsModule } from '../../src/questions/questions.module'
 import { QuestionsController } from '../../src/questions/questions.controller'
 import { getRepository, Repository } from 'typeorm'
-import { Question } from '../../src/entities'
+import { Question } from '../../src/typeorm/entities'
 
 describe('QuestionController (e2e)', () => {
 	let app: INestApplication

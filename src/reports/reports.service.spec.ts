@@ -4,7 +4,7 @@ import { getConfigModule, getTypeOrmModule } from '../modules'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
-import { Report } from '../entities'
+import { Report } from '../typeorm/entities'
 import { REPORT_STATUS } from '../utils'
 
 describe('ReportsService', () => {
