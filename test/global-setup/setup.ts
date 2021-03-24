@@ -51,9 +51,14 @@ export default async () => {
 			database: DEFAULT_TYPEORM.DATABASE,
 			username: DEFAULT_TYPEORM.USERNAME,
 			password: DEFAULT_TYPEORM.PASSWORD,
-			entities: [path.join(__dirname, '../../server/src/entities/*.js')],
+			entities: [
+				path.join(__dirname, '../../server/src/typeorm/entities/*.js'),
+			],
 			migrations: [
-				path.join(__dirname, '../../server/src/migrations/*.js'),
+				path.join(
+					__dirname,
+					'../../server/src/typeorm/migrations/*.js',
+				),
 			],
 			migrationsRun: true,
 		})
@@ -76,9 +81,14 @@ export default async () => {
 			database: DEFAULT_TYPEORM.DATABASE,
 			username: DEFAULT_TYPEORM.USERNAME,
 			password: DEFAULT_TYPEORM.PASSWORD,
-			entities: [path.join(__dirname, '../../server/src/entities/*.js')],
+			entities: [
+				path.join(__dirname, '../../server/src/typeorm/entities/*.js'),
+			],
 			migrations: [
-				path.join(__dirname, '../../server/src/migrations/*.js'),
+				path.join(
+					__dirname,
+					'../../server/src/typeorm/migrations/*.js',
+				),
 			],
 			migrationsRun: true,
 		})
