@@ -7,7 +7,7 @@ import { res } from '../../test/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
-import { Question } from '../entities'
+import { Question } from '../typeorm/entities'
 
 describe('QuestionsController', () => {
 	let controller: QuestionsController

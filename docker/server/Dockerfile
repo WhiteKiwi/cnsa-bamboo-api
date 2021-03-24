@@ -1,11 +1,5 @@
-FROM ubuntu:18.04
+FROM 138497848618.dkr.ecr.ap-northeast-2.amazonaws.com/node-server-base:1.0.0
 LABEL version="0.0.1"
-
-# Install git & node
-RUN apt-get update
-RUN apt-get install -y git curl
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
 
 # Clone repository
 COPY GITHUB_ACCESS_TOKEN GITHUB_ACCESS_TOKEN
