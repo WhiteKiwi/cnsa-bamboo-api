@@ -6,7 +6,17 @@ module.exports = {
 	transform: {
 		'^.+\\.(t|j)s$': 'ts-jest',
 	},
-	collectCoverageFrom: ['**/*.(t|j)s'],
+	collectCoverageFrom: [
+		'**/*.(t|j)s',
+		'!**/*.(module|dto|mock).ts',
+		'!**/index.ts',
+	],
+	coveragePathIgnorePatterns: [
+		'<rootDir>/typeorm',
+		'<rootDir>/utils/interceptors',
+		'<rootDir>/modules',
+		'<rootDir>/main.ts',
+	],
 	coverageDirectory: '../coverage',
 	testEnvironment: 'node',
 	testTimeout: 60000,
