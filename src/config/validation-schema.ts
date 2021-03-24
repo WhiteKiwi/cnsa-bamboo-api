@@ -19,7 +19,7 @@ export default Joi.object({
 					then: Joi.string().required(),
 				},
 				{
-					is: ENV.STATGING,
+					is: ENV.STAGING,
 					then: Joi.string().required(),
 				},
 			]),
@@ -32,7 +32,7 @@ export default Joi.object({
 					then: Joi.number().required(),
 				},
 				{
-					is: ENV.STATGING,
+					is: ENV.STAGING,
 					then: Joi.number().required(),
 				},
 			]),
@@ -45,7 +45,7 @@ export default Joi.object({
 					then: Joi.string().required(),
 				},
 				{
-					is: ENV.STATGING,
+					is: ENV.STAGING,
 					then: Joi.string().required(),
 				},
 			]),
@@ -58,7 +58,7 @@ export default Joi.object({
 					then: Joi.string().required(),
 				},
 				{
-					is: ENV.STATGING,
+					is: ENV.STAGING,
 					then: Joi.string().required(),
 				},
 			]),
@@ -71,7 +71,7 @@ export default Joi.object({
 					then: Joi.string().required(),
 				},
 				{
-					is: ENV.STATGING,
+					is: ENV.STAGING,
 					then: Joi.string().required(),
 				},
 			]),
