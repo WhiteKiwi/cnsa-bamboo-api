@@ -1,5 +1,5 @@
 module.exports = {
-	globalSetup: '<rootDir>/../test/global-setup/setup.ts',
+	globalSetup: '<rootDir>/../test/test-env/global-setup/setup.ts',
 	moduleFileExtensions: ['js', 'json', 'ts'],
 	rootDir: 'src',
 	testRegex: '.*\\.spec\\.ts$',
@@ -12,7 +12,8 @@ module.exports = {
 		'!**/index.ts',
 	],
 	coveragePathIgnorePatterns: [
-		'<rootDir>/typeorm',
+		'<rootDir>/typeorm/entities',
+		'<rootDir>/typeorm/migrations',
 		'<rootDir>/utils/interceptors',
 		'<rootDir>/modules',
 		'<rootDir>/main.ts',
