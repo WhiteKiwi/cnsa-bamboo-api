@@ -6,7 +6,7 @@ export class CreatedAt {
 		type: 'timestamp',
 		precision: 3,
 		name: 'created_at',
-		default: 'CURRENT_TIMESTAMP(3)',
+		default: () => 'CURRENT_TIMESTAMP(3)',
 		transformer: TimestampTransformer,
 		select: false,
 	})
