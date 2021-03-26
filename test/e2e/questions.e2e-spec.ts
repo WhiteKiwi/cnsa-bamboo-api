@@ -3,7 +3,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common'
 import supertest from 'supertest'
 
 import { getConfigModule, getTypeOrmModule } from '../../src/modules'
-import { sleep } from '../../src/utils'
+import { sleep } from '../test-env/utils'
 
 import { AppService } from '../../src/app.service'
 import { AppController } from '../../src/app.controller'

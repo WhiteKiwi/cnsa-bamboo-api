@@ -13,6 +13,7 @@ module.exports = {
 	],
 	coveragePathIgnorePatterns: [
 		'<rootDir>/typeorm/entities',
+		'<rootDir>/typeorm/entity-bases',
 		'<rootDir>/typeorm/migrations',
 		'<rootDir>/utils/interceptors',
 		'<rootDir>/modules',

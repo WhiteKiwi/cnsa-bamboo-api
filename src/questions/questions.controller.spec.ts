@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsController } from './questions.controller'
 import { QuestionsService } from './questions.service'
 import { getConfigModule, getTypeOrmModule } from '../modules'
-import { sleep } from '../utils'
+import { sleep } from '../../test/test-env/utils'
 import { getMockedResponse } from '../../test/test-env/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'

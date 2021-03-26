@@ -1,5 +1,5 @@
 import { Entity, Column, Index } from 'typeorm'
-import { REPORT_STATUS } from '../../utils'
+import { REPORT_STATUS } from '../../utils/types'
 import { PrimaryIdWithDateColumns } from '../entity-bases'
 
 @Entity({ name: 'reports' })
