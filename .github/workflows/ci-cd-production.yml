@@ -54,7 +54,9 @@ jobs:
     needs: ci
     name: Deploy to production
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: production
+      url: https://cnsa-bamboo-api.whitekiwi-test.com
 
     steps:
     - name: Checkout
