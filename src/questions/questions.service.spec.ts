@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsService } from './questions.service'
 import { getConfigModule, getTypeOrmModule } from '../modules'
-import { sleep } from '../utils'
+import { sleep } from '../../test/test-env/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'

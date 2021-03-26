@@ -54,7 +54,9 @@ jobs:
     needs: ci
     name: Deploy to develop
     runs-on: ubuntu-latest
-    environment: develop
+    environment:
+      name: develop
+      url: https://cnsa-bamboo-api.dev.whitekiwi-test.com
 
     steps:
     - name: Checkout

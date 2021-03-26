@@ -1,27 +1,19 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm'
-import { Question } from './question.entity'
+import { PrimaryIdWithDateColumns } from '../entity-bases'
+import { Question } from '.'
 
 @Entity({ name: 'answers' })
-export class Answer {
+export class Answer extends PrimaryIdWithDateColumns {
 	@ManyToOne(() => Question, (question) => question.answers, {
+		onUpdate: 'CASCADE',
 		onDelete: 'CASCADE',
-		primary: true,
+		nullable: false,
 	})
 	@JoinColumn({ name: 'question_id' })
 	question: Question
+	@Column('int', { unsigned: true, name: 'question_id' })
+	questionId: number
 
-	@Column('varchar', { length: 100, primary: true })
+	@Column('varchar', { length: 100, unique: true })
 	answer: string
-
-	@Column('timestamp', {
-		name: 'created_at',
-		default: () => 'CURRENT_TIMESTAMP',
-	})
-	createdAt: Date
-
-	@Column('timestamp', {
-		name: 'updated_at',
-		default: () => 'CURRENT_TIMESTAMP',
-	})
-	updatedAt: Date
 }

@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsController } from './questions.controller'
 import { QuestionsService } from './questions.service'
 import { getConfigModule, getTypeOrmModule } from '../modules'
-import { sleep } from '../utils'
-import { res } from '../../test/utils'
+import { sleep } from '../../test/test-env/utils'
+import { getMockedResponse } from '../../test/test-env/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
@@ -57,7 +57,7 @@ describe('QuestionsController', () => {
 
 	it('Should be create question', async () => {
 		const question = '감자의 키는?'
-		await controller.create(question, res)
+		await controller.create(question, getMockedResponse())
 
 		const data = await questionRepository.find({ content: question })
 
@@ -66,7 +66,7 @@ describe('QuestionsController', () => {
 
 	it('Should be return 409 Conflict', async () => {
 		const question = 'ADRFSGABVDFS'
-		await controller.create(question, res)
-		await controller.create(question, res)
+		await controller.create(question, getMockedResponse())
+		await controller.create(question, getMockedResponse())
 	})
 })

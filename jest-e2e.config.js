@@ -1,5 +1,5 @@
 module.exports = {
-	globalSetup: '<rootDir>/../global-setup/setup.ts',
+	globalSetup: '<rootDir>/../test-env/global-setup/setup.ts',
 	moduleFileExtensions: ['js', 'json', 'ts'],
 	rootDir: 'test/e2e',
 	testEnvironment: 'node',
