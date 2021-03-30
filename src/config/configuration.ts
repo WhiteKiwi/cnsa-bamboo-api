@@ -1,4 +1,7 @@
+import { version } from '../../package.json'
+
 export default () => ({
+	VERSION: version,
 	PORT: process.env.PORT,
 	ENVIRONMENT: process.env.ENVIRONMENT,
 	TYPEORM: {
@@ -7,5 +10,8 @@ export default () => ({
 		DATABASE: process.env.TYPEORM_DATABASE,
 		USERNAME: process.env.TYPEORM_USERNAME,
 		PASSWORD: process.env.TYPEORM_PASSWORD,
+	},
+	SENTRY: {
+		DSN: process.env.SENTRY_DSN,
 	},
 })

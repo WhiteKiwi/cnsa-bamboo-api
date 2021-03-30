@@ -1,0 +1,7 @@
+[defaults]
+url = https://sentry.io/
+org = cnsa-bamboo-admins
+project = cnsa-bamboo-api
+
+[auth]
+token=

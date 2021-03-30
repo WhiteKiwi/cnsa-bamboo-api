@@ -3,32 +3,25 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 
 import { getConfigModule, getTypeOrmModule } from './modules'
-import { ReportsModule } from './reports/reports.module'
 
 describe('AppController', () => {
-	let appController: AppController
-	let appService: AppService
+	let controller: AppController
+	let service: AppService
 
 	beforeEach(async () => {
 		const app: TestingModule = await Test.createTestingModule({
-			imports: [
-				getConfigModule({ isTest: true }),
-				getTypeOrmModule(),
-				ReportsModule,
-			],
+			imports: [getConfigModule({ isTest: true }), getTypeOrmModule()],
 			controllers: [AppController],
 			providers: [AppService],
 		}).compile()
 
-		appController = app.get<AppController>(AppController)
-		appService = new AppService()
+		controller = app.get<AppController>(AppController)
+		service = app.get<AppService>(AppService)
 	})
 
 	describe('root', () => {
 		it('should return version of package', () => {
-			expect(appController.getVersion().version).toBe(
-				appService.getVersion(),
-			)
+			expect(controller.getVersion().version).toBe(service.getVersion())
 		})
 	})
 })
