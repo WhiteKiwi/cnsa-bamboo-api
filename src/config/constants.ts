@@ -1,3 +1,4 @@
+export const VERSION = 'VERSION'
 export const PORT = 'PORT'
 export const ENVIRONMENT = 'ENVIRONMENT'
 export const TYPEORM = {
@@ -7,11 +8,6 @@ export const TYPEORM = {
 	USERNAME: 'TYPEORM.USERNAME',
 	PASSWORD: 'TYPEORM.PASSWORD',
 }
-
-const constants = {
-	PORT,
-	ENVIRONMENT,
-	TYPEORM,
+export const SENTRY = {
+	DSN: 'SENTRY.DSN',
 }
-
-export default constants

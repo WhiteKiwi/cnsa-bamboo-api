@@ -4,6 +4,7 @@ import { ENVIRONMENT } from './constants'
 import { ENVIRONMENT as ENV } from '../utils/types'
 
 export default Joi.object({
+	VERSION: Joi.string(),
 	PORT: Joi.number().empty('').default(DEFAULT_PORT),
 	ENVIRONMENT: Joi.string()
 		.empty('')
@@ -65,6 +66,20 @@ export default Joi.object({
 		PASSWORD: Joi.string()
 			.empty('')
 			.default(DEFAULT_TYPEORM.PASSWORD)
+			.when(ENVIRONMENT, [
+				{
+					is: ENV.PRODUCTION,
+					then: Joi.string().required(),
+				},
+				{
+					is: ENV.STAGING,
+					then: Joi.string().required(),
+				},
+			]),
+	},
+	SENTRY: {
+		DSN: Joi.string()
+			.empty('')
 			.when(ENVIRONMENT, [
 				{
 					is: ENV.PRODUCTION,
