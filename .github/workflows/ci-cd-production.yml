@@ -5,10 +5,67 @@ on:
     branches: [ main ]
 
 jobs:
-  ci:
+  # 어차피 지금은 fast forward라서 필요하지 않을 듯 함
+  # ci:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     # Install dependencies
+  #     - name: Cache node modules
+  #       id: node-cache
+  #       uses: actions/cache@v2
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-${{env.cache-name}}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-${{env.cache-name}}-
+  #     - name: Install dependencies
+  #       if: steps.node-cache.outputs.cache-hit != 'true'
+  #       run: npm install
+
+  #     # Build migrations
+  #     - name: Cache migrations
+  #       id: migration-cache
+  #       uses: actions/cache@v2
+  #       env:
+  #         cache-name: cache-migrations
+  #       with:
+  #         path: server
+  #         key: ${{ runner.os }}-${{env.cache-name}}-${{ hashFiles('**/typeorm/**/*.ts') }}
+  #           ${{ runner.os }}-${{env.cache-name}}-
+  #     - name: Build
+  #       if: steps.migration-cache.outputs.cache-hit != 'true'
+  #       run: npm run build
+
+  #     # Test
+  #     - name: Test
+  #       run: |
+  #         npm run test:cov
+  #     - name: Upload coverage to Codecov
+  #       uses: codecov/codecov-action@v1
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #     - name: Test(e2e)
+  #       run: |
+  #         npm run test:e2e
+
+  migration:
+    # needs: ci
+    name: Migrate Database
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Create .env
+      - name: Create .env
+        env:
+          DOTENV: ${{ secrets.PRODUCTION_ENV }}
+        run: |
+          echo "$DOTENV" > .env
+
       # Install dependencies
       - name: Cache node modules
         id: node-cache
@@ -24,34 +81,13 @@ jobs:
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm install
 
-      # Build migrations
-      - name: Cache migrations
-        id: migration-cache
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-migrations
-        with:
-          path: server
-          key: ${{ runner.os }}-${{env.cache-name}}-${{ hashFiles('**/typeorm/**/*.ts') }}
-            ${{ runner.os }}-${{env.cache-name}}-
-      - name: Build
-        if: steps.migration-cache.outputs.cache-hit != 'true'
-        run: npm run build
-
-      # Test
-      - name: Test
+      # Migrate
+      - name: Migrate
         run: |
-          npm run test:cov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Test(e2e)
-        run: |
-          npm run test:e2e
+          npm run migration:run
 
   deploy-prod:
-    needs: ci
+    needs: migration
     name: Deploy to production
     runs-on: ubuntu-latest
     environment:
