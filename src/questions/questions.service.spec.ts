@@ -14,7 +14,7 @@ describe('QuestionsService', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			imports: [
-				getConfigModule({ isTest: true }),
+				getConfigModule({ test: true }),
 				getTypeOrmModule(),
 				TypeOrmModule.forFeature([Question]),
 			],

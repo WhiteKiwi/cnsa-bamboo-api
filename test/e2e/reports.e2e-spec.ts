@@ -19,7 +19,7 @@ describe('ReportController (e2e)', () => {
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [
-				getConfigModule({ isTest: true }),
+				getConfigModule({ test: true }),
 				getTypeOrmModule(),
 				ReportsModule,
 			],

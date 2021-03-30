@@ -10,7 +10,7 @@ describe('AppController', () => {
 
 	beforeEach(async () => {
 		const app: TestingModule = await Test.createTestingModule({
-			imports: [getConfigModule({ isTest: true }), getTypeOrmModule()],
+			imports: [getConfigModule({ test: true }), getTypeOrmModule()],
 			controllers: [AppController],
 			providers: [AppService],
 		}).compile()
