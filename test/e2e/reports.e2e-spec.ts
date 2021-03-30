@@ -9,7 +9,7 @@ import { AppController } from '../../src/app.controller'
 
 import { ReportsModule } from '../../src/reports/reports.module'
 import { ReportsController } from '../../src/reports/reports.controller'
-import { REPORT_STATUS } from '../../src/utils'
+import { REPORT_STATUS } from '../../src/utils/types'
 
 describe('ReportController (e2e)', () => {
 	let app: INestApplication
@@ -19,7 +19,7 @@ describe('ReportController (e2e)', () => {
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [
-				getConfigModule({ isTest: true }),
+				getConfigModule({ test: true }),
 				getTypeOrmModule(),
 				ReportsModule,
 			],

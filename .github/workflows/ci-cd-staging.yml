@@ -5,10 +5,67 @@ on:
     branches: [ develop ]
 
 jobs:
-  ci:
+  # 어차피 지금은 fast forward라서 필요하지 않을 듯 함
+  # ci:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     # Install dependencies
+  #     - name: Cache node modules
+  #       id: node-cache
+  #       uses: actions/cache@v2
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-${{env.cache-name}}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-${{env.cache-name}}-
+  #     - name: Install dependencies
+  #       if: steps.node-cache.outputs.cache-hit != 'true'
+  #       run: npm install
+
+  #     # Build migrations
+  #     - name: Cache migrations
+  #       id: migration-cache
+  #       uses: actions/cache@v2
+  #       env:
+  #         cache-name: cache-migrations
+  #       with:
+  #         path: server
+  #         key: ${{ runner.os }}-${{env.cache-name}}-${{ hashFiles('**/typeorm/**/*.ts') }}
+  #           ${{ runner.os }}-${{env.cache-name}}-
+  #     - name: Build
+  #       if: steps.migration-cache.outputs.cache-hit != 'true'
+  #       run: npm run build
+
+  #     # Test
+  #     - name: Test
+  #       run: |
+  #         npm run test:cov
+  #     - name: Upload coverage to Codecov
+  #       uses: codecov/codecov-action@v1
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #     - name: Test(e2e)
+  #       run: |
+  #         npm run test:e2e
+          
+  migration:
+    # needs: ci
+    name: Migrate Database
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Create .env
+      - name: Create .env
+        env:
+          DOTENV: ${{ secrets.STAGING_ENV }}
+        run: |
+          echo "$DOTENV" > .env
+
       # Install dependencies
       - name: Cache node modules
         id: node-cache
@@ -24,80 +81,61 @@ jobs:
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm install
 
-      # Build migrations
-      - name: Cache migrations
-        id: migration-cache
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-migrations
-        with:
-          path: server
-          key: ${{ runner.os }}-${{env.cache-name}}-${{ hashFiles('**/typeorm/**/*.ts') }}
-            ${{ runner.os }}-${{env.cache-name}}-
-      - name: Build
-        if: steps.migration-cache.outputs.cache-hit != 'true'
-        run: npm run build
+      # Migrate
+      - name: Migrate
+        run: |
+          npm run migration:run
 
-      # Test
-      - name: Test
-        run: |
-          npm run test:cov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Test(e2e)
-        run: |
-          npm run test:e2e
-          
   deploy-dev:
-    needs: ci
+    needs: migration
     name: Deploy to develop
     runs-on: ubuntu-latest
-    environment: develop
+    environment:
+      name: develop
+      url: https://cnsa-bamboo-api.dev.whitekiwi-test.com
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    # Create files, used for image
-    - name: Create files for docker image
-      env:
-        GITHUB_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
-        DOTENV: ${{ secrets.STAGING_ENV }}
-      run: |
-        echo "$GITHUB_ACCESS_TOKEN" > ./docker/server/GITHUB_ACCESS_TOKEN
-        echo "$DOTENV" > ./docker/server/.env
+      # Create files, used for image
+      - name: Create files for docker image
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+          DOTENV: ${{ secrets.STAGING_ENV }}
+        run: |
+          echo "$GITHUB_ACCESS_TOKEN" > ./docker/server/GITHUB_ACCESS_TOKEN
+          echo "$DOTENV" > ./docker/server/.env
 
-    # Configure AWS credentials
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-northeast-2
+      # Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
 
-    # Deploy image to ECR
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      # Deploy image to ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: cnsa-bamboo-api
-        IMAGE_TAG: latest
-        GITHUB_REF: ${{ github.ref }}
-      # ${GITHUB_REF#refs/heads/} => 현재 브랜치
-      run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./docker/server --build-arg BRANCH=${GITHUB_REF#refs/heads/}
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest-$GITHUB_SHA
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest-$GITHUB_SHA
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: cnsa-bamboo-api
+          IMAGE_TAG: latest
+          GITHUB_REF: ${{ github.ref }}
+        # ${GITHUB_REF#refs/heads/} => 현재 브랜치
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./docker/server --build-arg BRANCH=${GITHUB_REF#refs/heads/}
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest-$GITHUB_SHA
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest-$GITHUB_SHA
 
-    # Update ECS services
-    - name: Update ECS services
-      run: |
-        aws ecs update-service --force-new-deployment --service api-dev --cluster cnsa-bamboo
+      # Update ECS services
+      - name: Update ECS services
+        run: |
+          aws ecs update-service --force-new-deployment --service api-dev --cluster cnsa-bamboo
 

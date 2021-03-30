@@ -5,7 +5,7 @@ import { getConfigModule, getTypeOrmModule } from '../modules'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
 import { Report } from '../typeorm/entities'
-import { REPORT_STATUS } from '../utils'
+import { REPORT_STATUS } from '../utils/types'
 
 describe('ReportsService', () => {
 	let service: ReportsService
@@ -14,7 +14,7 @@ describe('ReportsService', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			imports: [
-				getConfigModule({ isTest: true }),
+				getConfigModule({ test: true }),
 				getTypeOrmModule(),
 				TypeOrmModule.forFeature([Report]),
 			],

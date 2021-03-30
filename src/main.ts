@@ -1,13 +1,71 @@
 import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
-import { PORT } from './config/constants'
+import { ENVIRONMENT, PORT, SENTRY, VERSION } from './config'
 import { AppModule } from './app.module'
+import { ENVIRONMENT as ENV } from './utils/types'
+import { isEmpty } from 'lodash'
+
+import * as Sentry from '@sentry/node'
+import { RewriteFrames } from '@sentry/integrations'
+
+// This allows TypeScript to detect our global value
+declare global {
+	// eslint-disable-next-line @typescript-eslint/no-namespace
+	namespace NodeJS {
+		interface Global {
+			__rootdir__: string
+		}
+	}
+}
+
+global.__rootdir__ = __dirname || process.cwd()
+
+function setupSentry({
+	dsn,
+	environment,
+	version,
+}: {
+	dsn: string
+	environment: ENV
+	version: string
+}) {
+	const debug = [ENV.TEST, ENV.LOCAL, ENV.DEVELOPMENT].includes(environment)
+	Sentry.init({
+		dsn,
+		environment,
+		release: version,
+		debug,
+		beforeSend: (event: Sentry.Event) => {
+			if (debug) return null
+
+			try {
+				// set request info to tag
+				if (isEmpty(event.tags)) {
+					event.tags = {}
+				}
+				event.tags.request = `${event.extra.req['method']}: ${event.extra.req['url']}`
+			} catch (e) {}
+			return event
+		},
+		integrations: [
+			new RewriteFrames({
+				root: global.__rootdir__,
+			}),
+		],
+	})
+}
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 
 	const configService: ConfigService = app.get(ConfigService)
 	const port = configService.get<number>(PORT)
+
+	setupSentry({
+		dsn: configService.get(SENTRY.DSN),
+		environment: configService.get(ENVIRONMENT),
+		version: configService.get(VERSION),
+	})
 
 	await app.listen(port, () =>
 		console.log(`API_BACKEND listening on port ${port}`),

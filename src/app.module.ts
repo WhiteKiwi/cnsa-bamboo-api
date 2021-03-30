@@ -3,6 +3,8 @@ import { getConfigModule, getTypeOrmModule } from './modules'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { APP_INTERCEPTOR } from '@nestjs/core'
+import { ravenInterceptor } from './utils/interceptors/raven'
 
 import { ReportsModule } from './reports/reports.module'
 import { QuestionsModule } from './questions/questions.module'
@@ -15,6 +17,12 @@ import { QuestionsModule } from './questions/questions.module'
 		QuestionsModule,
 	],
 	controllers: [AppController],
-	providers: [AppService],
+	providers: [
+		AppService,
+		{
+			provide: APP_INTERCEPTOR,
+			useValue: ravenInterceptor,
+		},
+	],
 })
 export class AppModule {}

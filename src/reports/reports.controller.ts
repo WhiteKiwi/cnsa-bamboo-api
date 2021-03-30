@@ -3,8 +3,8 @@ import { Controller, Get, Query } from '@nestjs/common'
 import { ReportsService } from './reports.service'
 import { Report } from '../typeorm/entities'
 
-import { REPORT_STATUS } from '../utils'
-import { upperCasePipe } from '../pipes'
+import { REPORT_STATUS } from '../utils/types'
+import { UpperCasePipe } from '../utils/pipes'
 
 @Controller('reports')
 export class ReportsController {
@@ -12,7 +12,7 @@ export class ReportsController {
 
 	@Get()
 	async find(
-		@Query('status', upperCasePipe)
+		@Query('status', UpperCasePipe)
 		status?: REPORT_STATUS,
 	): Promise<Report[]> {
 		return await this.reportsService.find({ status })

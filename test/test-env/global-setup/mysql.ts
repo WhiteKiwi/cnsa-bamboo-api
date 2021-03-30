@@ -7,17 +7,16 @@ import {
 	sleep,
 	teardownDockerContainer,
 } from '../utils'
-import { isEmpty } from 'lodash'
 
-import { DEFAULT_TYPEORM } from '../../src/config/default'
+import { DEFAULT_TYPEORM } from '../../../src/config/default'
 import { Connection, createConnection } from 'typeorm'
 
 const IMAGE_NAME = `bamboo-test-db`
 const CONTAINER_NAME = 'bamboo-test-db'
 
-export default async () => {
+export async function setupMysql() {
 	let connection: Connection
-	console.log('Start to set mocking data. Set up the db')
+	console.log('Start to set up the db')
 
 	if (!(await isImageExist(IMAGE_NAME))) {
 		const isTeardowned = await teardownDockerContainer(CONTAINER_NAME)
@@ -40,6 +39,29 @@ export default async () => {
 		// DB 실행 확인
 		console.log('Waiting DB starts...')
 		await sleep(20000)
+
+		await createConnection({
+			type: 'mysql',
+			host: DEFAULT_TYPEORM.HOST,
+			port: DEFAULT_TYPEORM.PORT,
+			database: DEFAULT_TYPEORM.DATABASE,
+			username: DEFAULT_TYPEORM.USERNAME,
+			password: DEFAULT_TYPEORM.PASSWORD,
+			entities: [
+				path.join(
+					__dirname,
+					'../../../server/**/src/typeorm/entities/*.js',
+				),
+			],
+			migrations: [
+				path.join(
+					__dirname,
+					'../../../server/**/src/typeorm/migrations/*.js',
+				),
+			],
+			migrationsTableName: 'migrations',
+			migrationsRun: true,
+		})
 	} else {
 		console.log('Initialize DB...')
 
@@ -52,14 +74,18 @@ export default async () => {
 			username: DEFAULT_TYPEORM.USERNAME,
 			password: DEFAULT_TYPEORM.PASSWORD,
 			entities: [
-				path.join(__dirname, '../../server/src/typeorm/entities/*.js'),
+				path.join(
+					__dirname,
+					'../../../server/**/src/typeorm/entities/*.js',
+				),
 			],
 			migrations: [
 				path.join(
 					__dirname,
-					'../../server/src/typeorm/migrations/*.js',
+					'../../../server/**/src/typeorm/migrations/*.js',
 				),
 			],
+			migrationsTableName: 'migrations',
 			migrationsRun: true,
 		})
 
@@ -72,36 +98,4 @@ export default async () => {
 
 		await connection.query('SET FOREIGN_KEY_CHECKS = 1')
 	}
-
-	if (isEmpty(connection)) {
-		connection = await createConnection({
-			type: 'mysql',
-			host: DEFAULT_TYPEORM.HOST,
-			port: DEFAULT_TYPEORM.PORT,
-			database: DEFAULT_TYPEORM.DATABASE,
-			username: DEFAULT_TYPEORM.USERNAME,
-			password: DEFAULT_TYPEORM.PASSWORD,
-			entities: [
-				path.join(__dirname, '../../server/src/typeorm/entities/*.js'),
-			],
-			migrations: [
-				path.join(
-					__dirname,
-					'../../server/src/typeorm/migrations/*.js',
-				),
-			],
-			migrationsRun: true,
-		})
-	}
-
-	// Insert mock data
-	await connection
-		.getRepository('questions')
-		.insert({ content: '감자는 귀엽습니까?' })
-	await connection
-		.getRepository('questions')
-		.insert({ content: '감자는 연애를 할 수 있습니까?' })
-
-	console.log('Setup complete!')
-	connection.close()
 }

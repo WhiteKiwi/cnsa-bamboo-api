@@ -17,14 +17,14 @@ export async function isImageExist(imageName: string) {
 	const existsImageName = await executeShellCommand(
 		`docker images ${imageName} --format '{{.Repository}}'`,
 	)
-	return existsImageName.includes(imageName)
+	return existsImageName === imageName
 }
 
 // Check if the docker container is running
 export async function isDockerContainerRunning(imageName: string) {
 	return !isEmpty(
 		await executeShellCommand(
-			`docker ps -f "ancestor=${imageName}" --format '{{.Image}}'`,
+			`docker ps -f 'ancestor=${imageName}' --format '{{.Image}}'`,
 		),
 	)
 }

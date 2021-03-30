@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common'
-import packageInfo from '../package.json'
+import { ConfigService } from '@nestjs/config'
+import { VERSION } from './config'
 
 @Injectable()
 export class AppService {
+	constructor(private readonly configService: ConfigService) {}
+
 	getVersion(): string {
-		return packageInfo.version
+		return this.configService.get(VERSION)
 	}
 }
