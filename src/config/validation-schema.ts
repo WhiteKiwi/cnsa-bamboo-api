@@ -31,20 +31,30 @@ export default flatMapToJoiObject({
 })
 
 // Joi schema를 만듬
+interface makeJoiSchemaParams {
+	type?: string
+	allowEmpty?: boolean
+	valid?: any[]
+	defaultValue?: any
+	requiredOnDeployment?: boolean
+}
 function makeJoiSchema(
 	{
 		type = 'string',
-		defaultValue,
+		allowEmpty = true,
 		valid,
+		defaultValue,
 		requiredOnDeployment = true,
-	}: {
-		type?: string
-		defaultValue?: any
-		valid?: any[]
-		requiredOnDeployment?: boolean
-	} = { type: 'string', requiredOnDeployment: true },
+	}: makeJoiSchemaParams = {
+		type: 'string',
+		allowEmpty: true,
+		requiredOnDeployment: true,
+	},
 ): Joi.AnySchema {
-	let schmea = Joi[type]().empty('')
+	let schmea = Joi[type]()
+
+	// istanbul ignore next line
+	if (allowEmpty) schmea = schmea.empty('')
 
 	// valid value
 	if (isArray(valid)) schmea = schmea.valid(...valid)
@@ -71,22 +81,25 @@ function makeJoiSchema(
  * 내부 object를 '_'로 묶어서 JOI_SCHEMA로 반환함
  * const obj = {
  * 		SENTRY: {
- * 			DSN: JOI_SCHEMA,
- * 			ESN: JOI_SCHEMA,
+ * 			DSN: Joi.string(),
+ * 			ESN: Joi.string(),
  * 		}
  * 	}
  * 	console.log(makeJoiObject(obj))
  * 	=> {
- * 		SENTRY_DSN: JOI_SCHEMA,
- * 		SENTRY_ESN: JOI_SCHEMA,
+ * 		SENTRY_DSN: Joi.string(),
+ * 		SENTRY_ESN: Joi.string(),
  * 	}
  */
-function flatMapToJoiObject(obj: any) {
-	const convertedObj = {}
+interface SchemaObject {
+	[key: string]: SchemaObject | Joi.AnySchema
+}
+function flatMapToJoiObject(obj: SchemaObject): Joi.ObjectSchema {
+	const convertedObj: { [key: string]: Joi.AnySchema } = {}
 	const keys = Object.keys(obj)
 	for (const key of keys) {
 		if (Joi.isSchema(obj[key])) {
-			convertedObj[key] = obj[key]
+			convertedObj[key] = obj[key] as Joi.AnySchema
 		} else {
 			for (const innerKey of Object.keys(obj[key])) {
 				const unitedKey = key + '_' + innerKey
