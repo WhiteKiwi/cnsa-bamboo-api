@@ -1,5 +1,5 @@
-export const DEFAULT_PORT = 3001
-export const DEFAULT_TYPEORM = {
+export const PORT = 3001
+export const TYPEORM = {
 	HOST: 'localhost',
 	PORT: 3306,
 	DATABASE: 'cnsabamboo',
@@ -8,6 +8,6 @@ export const DEFAULT_TYPEORM = {
 }
 
 export default {
-	DEFAULT_PORT,
-	DEFAULT_TYPEORM,
+	PORT,
+	TYPEORM,
 }
