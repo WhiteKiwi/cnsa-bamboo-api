@@ -36,20 +36,15 @@ function makeJoiSchema(
 		type = 'string',
 		defaultValue,
 		valid,
-		allowEmpty = true,
 		requiredOnDeployment = true,
 	}: {
 		type?: string
 		defaultValue?: any
 		valid?: any[]
-		allowEmpty?: boolean
 		requiredOnDeployment?: boolean
-	} = { type: 'string', allowEmpty: true, requiredOnDeployment: true },
+	} = { type: 'string', requiredOnDeployment: true },
 ): Joi.AnySchema {
-	let schmea = Joi[type]()
-
-	// 공백 허용
-	if (allowEmpty) schmea = schmea.empty('')
+	let schmea = Joi[type]().empty('')
 
 	// valid value
 	if (isArray(valid)) schmea = schmea.valid(...valid)
