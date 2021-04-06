@@ -38,6 +38,7 @@
 		"@nestjs/typeorm": "^7.1.5",
 		"@sentry/integrations": "^6.2.4",
 		"@sentry/node": "^6.2.4",
+		"@sentry/tracing": "^6.2.5",
 		"joi": "^17.4.0",
 		"lodash": "^4.17.21",
 		"mysql2": "^2.2.5",

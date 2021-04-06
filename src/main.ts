@@ -5,9 +5,6 @@ import { AppModule } from './app.module'
 import { ENVIRONMENT as ENV } from './utils/types'
 import { isEmpty } from 'lodash'
 
-import * as Sentry from '@sentry/node'
-import { RewriteFrames } from '@sentry/integrations'
-
 // This allows TypeScript to detect our global value
 declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
@@ -17,14 +14,39 @@ declare global {
 		}
 	}
 }
-
 global.__rootdir__ = __dirname || process.cwd()
 
+async function bootstrap() {
+	const app = await NestFactory.create(AppModule)
+
+	const configService: ConfigService = app.get(ConfigService)
+	const port = configService.get<number>(PORT)
+
+	setupSentry({
+		app,
+		dsn: configService.get(SENTRY.DSN),
+		environment: configService.get(ENVIRONMENT),
+		version: configService.get(VERSION),
+	})
+
+	await app.listen(port, () =>
+		console.log(`API_BACKEND listening on port ${port}`),
+	)
+}
+bootstrap()
+
+// Sentry
+import * as Sentry from '@sentry/node'
+import * as Tracing from '@sentry/tracing'
+import { RewriteFrames } from '@sentry/integrations'
+
 function setupSentry({
+	app,
 	dsn,
 	environment,
 	version,
 }: {
+	app
 	dsn: string
 	environment: ENV
 	version: string
@@ -51,24 +73,13 @@ function setupSentry({
 			new RewriteFrames({
 				root: global.__rootdir__,
 			}),
+			new Tracing.Integrations.Express({ app }),
 		],
+		tracesSampler: (sample) => {
+			// GET / => Health Check에 사용됨
+			// GET / 는 1%만 check
+			return new URL(sample.request.url).pathname !== '/' ? 1 : 0.01
+		},
 	})
+	app.use(Sentry.Handlers.tracingHandler())
 }
-
-async function bootstrap() {
-	const app = await NestFactory.create(AppModule)
-
-	const configService: ConfigService = app.get(ConfigService)
-	const port = configService.get<number>(PORT)
-
-	setupSentry({
-		dsn: configService.get(SENTRY.DSN),
-		environment: configService.get(ENVIRONMENT),
-		version: configService.get(VERSION),
-	})
-
-	await app.listen(port, () =>
-		console.log(`API_BACKEND listening on port ${port}`),
-	)
-}
-bootstrap()
