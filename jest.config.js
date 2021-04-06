@@ -15,6 +15,7 @@ module.exports = {
 		'<rootDir>/typeorm/entities',
 		'<rootDir>/typeorm/entity-bases',
 		'<rootDir>/typeorm/migrations',
+		'<rootDir>/utils/types',
 		'<rootDir>/utils/interceptors',
 		'<rootDir>/modules',
 		'<rootDir>/main.ts',

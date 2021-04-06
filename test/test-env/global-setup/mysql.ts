@@ -8,7 +8,7 @@ import {
 	teardownDockerContainer,
 } from '../utils'
 
-import { DEFAULT_TYPEORM } from '../../../src/config/default'
+import DEFAULT from '../../../src/config/default'
 import { Connection, createConnection } from 'typeorm'
 
 const IMAGE_NAME = `bamboo-test-db`
@@ -42,11 +42,11 @@ export async function setupMysql() {
 
 		await createConnection({
 			type: 'mysql',
-			host: DEFAULT_TYPEORM.HOST,
-			port: DEFAULT_TYPEORM.PORT,
-			database: DEFAULT_TYPEORM.DATABASE,
-			username: DEFAULT_TYPEORM.USERNAME,
-			password: DEFAULT_TYPEORM.PASSWORD,
+			host: DEFAULT.TYPEORM.HOST,
+			port: DEFAULT.TYPEORM.PORT,
+			database: DEFAULT.TYPEORM.DATABASE,
+			username: DEFAULT.TYPEORM.USERNAME,
+			password: DEFAULT.TYPEORM.PASSWORD,
 			entities: [
 				path.join(
 					__dirname,
@@ -68,11 +68,11 @@ export async function setupMysql() {
 		// DB 초기화
 		connection = await createConnection({
 			type: 'mysql',
-			host: DEFAULT_TYPEORM.HOST,
-			port: DEFAULT_TYPEORM.PORT,
-			database: DEFAULT_TYPEORM.DATABASE,
-			username: DEFAULT_TYPEORM.USERNAME,
-			password: DEFAULT_TYPEORM.PASSWORD,
+			host: DEFAULT.TYPEORM.HOST,
+			port: DEFAULT.TYPEORM.PORT,
+			database: DEFAULT.TYPEORM.DATABASE,
+			username: DEFAULT.TYPEORM.USERNAME,
+			password: DEFAULT.TYPEORM.PASSWORD,
 			entities: [
 				path.join(
 					__dirname,

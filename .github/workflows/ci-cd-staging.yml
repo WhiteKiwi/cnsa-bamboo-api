@@ -139,3 +139,49 @@ jobs:
         run: |
           aws ecs update-service --force-new-deployment --service api-dev --cluster cnsa-bamboo
 
+  # Create Sentry release
+  create-sentry-release:
+    needs: deploy-dev
+    name: Create Sentry release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Install dependencies
+      - name: Cache node modules
+        id: node-cache
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{env.cache-name}}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{env.cache-name}}-
+      - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      # Build
+      - name: Build
+        run: |
+          npm run build
+
+      # Get Current Version from pacakge.json
+      - name: Get Current Version
+        run: |
+          cat ./package.json | jq -r '.version'
+          echo "VERSION=$(cat ./package.json | jq -r '.version')" >> $GITHUB_ENV
+
+      # Create Sentry release
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: cnsa-bamboo-admins
+          SENTRY_PROJECT: cnsa-bamboo-api
+        with:
+          environment: STAGING
+          sourcemaps: ./server/src
+          version: ${{ env.VERSION }}

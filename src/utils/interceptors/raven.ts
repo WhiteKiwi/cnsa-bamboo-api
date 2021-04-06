@@ -11,6 +11,7 @@ export const ravenInterceptor = new RavenInterceptor({
 		},
 		{
 			type: EntityNotFoundError,
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			filter: (exception: HttpException) => true,
 		},
 	],
