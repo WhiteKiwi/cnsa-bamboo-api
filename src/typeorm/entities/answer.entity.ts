@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, ManyToOne, JoinColumn, Unique } from 'typeorm'
 import { PrimaryIdWithDateColumns } from '../entity-bases'
 import { Question } from '.'
 
+@Unique('answers_question_id_answer_unique_key', ['question', 'answer'])
 @Entity({ name: 'answers' })
 export class Answer extends PrimaryIdWithDateColumns {
 	@ManyToOne(() => Question, (question) => question.answers, {
@@ -14,6 +15,6 @@ export class Answer extends PrimaryIdWithDateColumns {
 	@Column('int', { unsigned: true, name: 'question_id' })
 	questionId: number
 
-	@Column('varchar', { length: 100, unique: true })
+	@Column('varchar', { length: 100 })
 	answer: string
 }
