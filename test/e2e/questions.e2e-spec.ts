@@ -12,6 +12,7 @@ import { QuestionsModule } from '../../src/api/questions/questions.module'
 import { QuestionsController } from '../../src/api/questions/questions.controller'
 import { getRepository, Repository } from 'typeorm'
 import { Question } from '../../src/typeorm/entities'
+import { globalSetup } from '../../src/main'
 
 describe('QuestionController (e2e)', () => {
 	let app: INestApplication
@@ -31,6 +32,7 @@ describe('QuestionController (e2e)', () => {
 		}).compile()
 
 		app = moduleFixture.createNestApplication()
+		globalSetup(app)
 		await app.init()
 		request = supertest(app.getHttpServer())
 
