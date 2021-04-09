@@ -11,6 +11,9 @@ import {
 import { QuestionsService } from './questions.service'
 import { Question } from '../../typeorm/entities'
 
+import { ApiTags } from '@nestjs/swagger'
+
+@ApiTags('Question')
 @Controller('questions')
 export class QuestionsController {
 	constructor(private readonly reportsService: QuestionsService) {}

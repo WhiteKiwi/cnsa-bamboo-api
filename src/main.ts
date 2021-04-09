@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
+import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { ENVIRONMENT, PORT, SENTRY, VERSION } from './config'
 import { AppModule } from './app.module'
 import { ENVIRONMENT as ENV } from './utils/types'
@@ -25,6 +26,9 @@ async function bootstrap() {
 	const configService: ConfigService = app.get(ConfigService)
 	const port = configService.get<number>(PORT)
 
+	if (configService.get(ENVIRONMENT) !== ENV.PRODUCTION) {
+		setupSwagger(app)
+	}
 	setupSentry({
 		app,
 		dsn: configService.get(SENTRY.DSN),
@@ -33,6 +37,7 @@ async function bootstrap() {
 	})
 
 	app.useGlobalFilters(...exceptionFilters)
+	app.useGlobalPipes(new ValidationPipe({ transform: true }))
 
 	app.use(json({ limit: '50mb' }))
 	app.use(urlencoded({ limit: '50mb', extended: true }))
@@ -91,4 +96,23 @@ function setupSentry({
 		},
 	})
 	app.use(Sentry.Handlers.tracingHandler())
+}
+
+// Swagger
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { version } from '../package.json'
+
+function setupSwagger(app: INestApplication) {
+	const config = new DocumentBuilder()
+		.setTitle('CNSA Bamboo App API')
+		.setDescription('CNSA Bamboo App API description')
+		.setVersion(version)
+		.addBearerAuth()
+		.build()
+
+	const document = SwaggerModule.createDocument(app, config)
+	const swaggerCustomOptions = {
+		customSiteTitle: 'CNSA Bamboo App API Docs',
+	}
+	SwaggerModule.setup('docs', app, document, swaggerCustomOptions)
 }
