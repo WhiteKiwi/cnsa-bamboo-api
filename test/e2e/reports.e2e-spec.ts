@@ -7,8 +7,8 @@ import { getConfigModule, getTypeOrmModule } from '../../src/modules'
 import { AppService } from '../../src/app.service'
 import { AppController } from '../../src/app.controller'
 
-import { ReportsModule } from '../../src/reports/reports.module'
-import { ReportsController } from '../../src/reports/reports.controller'
+import { ReportsModule } from '../../src/api/reports/reports.module'
+import { ReportsController } from '../../src/api/reports/reports.controller'
 import { REPORT_STATUS } from '../../src/utils/types'
 
 describe('ReportController (e2e)', () => {

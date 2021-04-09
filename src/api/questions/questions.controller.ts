@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common'
 
 import { QuestionsService } from './questions.service'
-import { Question } from '../typeorm/entities'
+import { Question } from '../../typeorm/entities'
 
 @Controller('questions')
 export class QuestionsController {
