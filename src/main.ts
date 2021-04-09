@@ -35,23 +35,19 @@ async function bootstrap() {
 		environment: configService.get(ENVIRONMENT),
 		version: configService.get(VERSION),
 	})
-	globalSetup(app)
 
-	await app.listen(port, () =>
-		console.log(`API_BACKEND listening on port ${port}`),
-	)
-}
-bootstrap()
-
-// Export for e2e testing modules
-export function globalSetup(app: INestApplication) {
 	app.useGlobalFilters(...exceptionFilters)
 	app.useGlobalPipes(new ValidationPipe({ transform: true }))
 
 	app.use(json({ limit: '50mb' }))
 	app.use(urlencoded({ limit: '50mb', extended: true }))
 	app.use(helmet())
+
+	await app.listen(port, () =>
+		console.log(`API_BACKEND listening on port ${port}`),
+	)
 }
+bootstrap()
 
 // Sentry
 import * as Sentry from '@sentry/node'

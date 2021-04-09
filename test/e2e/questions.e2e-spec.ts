@@ -2,7 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { HttpStatus, INestApplication } from '@nestjs/common'
 import supertest from 'supertest'
 
-import { getConfigModule, getTypeOrmModule } from '../../src/modules'
+import {
+	getCacheModule,
+	getConfigModule,
+	getTypeOrmModule,
+} from '../../src/modules'
 import { sleep } from '../test-env/utils'
 
 import { AppService } from '../../src/app.service'
@@ -12,7 +16,7 @@ import { QuestionsModule } from '../../src/api/questions/questions.module'
 import { QuestionsController } from '../../src/api/questions/questions.controller'
 import { getRepository, Repository } from 'typeorm'
 import { Question } from '../../src/typeorm/entities'
-import { globalSetup } from '../../src/main'
+import { globalSetup } from './app-global-setup'
 
 describe('QuestionController (e2e)', () => {
 	let app: INestApplication
@@ -25,6 +29,7 @@ describe('QuestionController (e2e)', () => {
 			imports: [
 				getConfigModule({ test: true }),
 				getTypeOrmModule(),
+				getCacheModule(),
 				QuestionsModule,
 			],
 			controllers: [AppController],

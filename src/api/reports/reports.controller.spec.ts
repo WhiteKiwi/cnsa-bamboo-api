@@ -1,5 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { getConfigModule, getTypeOrmModule } from '../../modules'
+import {
+	getCacheModule,
+	getConfigModule,
+	getTypeOrmModule,
+} from '../../modules'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ReportsController } from './reports.controller'
@@ -16,6 +20,7 @@ describe('ReportsController', () => {
 			imports: [
 				getConfigModule({ test: true }),
 				getTypeOrmModule(),
+				getCacheModule(),
 				TypeOrmModule.forFeature([Report]),
 			],
 			controllers: [ReportsController],
