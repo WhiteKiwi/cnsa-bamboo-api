@@ -185,3 +185,4 @@ jobs:
           environment: STAGING
           sourcemaps: ./server/src
           version: ${{ env.VERSION }}
+          url_prefix: "~/"
