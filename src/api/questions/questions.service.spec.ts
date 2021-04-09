@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsService } from './questions.service'
-import { getConfigModule, getTypeOrmModule } from '../modules'
-import { sleep } from '../../test/test-env/utils'
+import { getConfigModule, getTypeOrmModule } from '../../modules'
+import { sleep } from '../../../test/test-env/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
-import { Question } from '../typeorm/entities'
+import { Question } from '../../typeorm/entities'
 
 describe('QuestionsService', () => {
 	let service: QuestionsService

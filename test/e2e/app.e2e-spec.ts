@@ -6,8 +6,8 @@ import { getConfigModule, getTypeOrmModule } from '../../src/modules'
 
 import { AppService } from '../../src/app.service'
 import { AppController } from '../../src/app.controller'
-import { ReportsModule } from '../../src/reports/reports.module'
-import { QuestionsModule } from '../../src/questions/questions.module'
+import { ReportsModule } from '../../src/api/reports/reports.module'
+import { QuestionsModule } from '../../src/api/questions/questions.module'
 
 describe('AppController (e2e)', () => {
 	let app: INestApplication

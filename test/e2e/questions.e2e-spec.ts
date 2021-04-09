@@ -8,8 +8,8 @@ import { sleep } from '../test-env/utils'
 import { AppService } from '../../src/app.service'
 import { AppController } from '../../src/app.controller'
 
-import { QuestionsModule } from '../../src/questions/questions.module'
-import { QuestionsController } from '../../src/questions/questions.controller'
+import { QuestionsModule } from '../../src/api/questions/questions.module'
+import { QuestionsController } from '../../src/api/questions/questions.controller'
 import { getRepository, Repository } from 'typeorm'
 import { Question } from '../../src/typeorm/entities'
 
