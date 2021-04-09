@@ -4,6 +4,7 @@ import { ENVIRONMENT, PORT, SENTRY, VERSION } from './config'
 import { AppModule } from './app.module'
 import { ENVIRONMENT as ENV } from './utils/types'
 import { isEmpty } from 'lodash'
+import { json, urlencoded } from 'express'
 import { exceptionFilters } from './utils/exception-filters'
 
 // This allows TypeScript to detect our global value
@@ -31,6 +32,9 @@ async function bootstrap() {
 	})
 
 	app.useGlobalFilters(...exceptionFilters)
+
+	app.use(json({ limit: '50mb' }))
+	app.use(urlencoded({ limit: '50mb', extended: true }))
 
 	await app.listen(port, () =>
 		console.log(`API_BACKEND listening on port ${port}`),
