@@ -10,6 +10,7 @@ import { AppController } from '../../src/app.controller'
 import { ReportsModule } from '../../src/api/reports/reports.module'
 import { ReportsController } from '../../src/api/reports/reports.controller'
 import { REPORT_STATUS } from '../../src/utils/types'
+import { globalSetup } from '../../src/main'
 
 describe('ReportController (e2e)', () => {
 	let app: INestApplication
@@ -28,6 +29,7 @@ describe('ReportController (e2e)', () => {
 		}).compile()
 
 		app = moduleFixture.createNestApplication()
+		globalSetup(app)
 		await app.init()
 		request = supertest(app.getHttpServer())
 

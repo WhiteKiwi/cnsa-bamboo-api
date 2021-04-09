@@ -8,6 +8,7 @@ import { AppService } from '../../src/app.service'
 import { AppController } from '../../src/app.controller'
 import { ReportsModule } from '../../src/api/reports/reports.module'
 import { QuestionsModule } from '../../src/api/questions/questions.module'
+import { globalSetup } from '../../src/main'
 
 describe('AppController (e2e)', () => {
 	let app: INestApplication
@@ -27,6 +28,7 @@ describe('AppController (e2e)', () => {
 		}).compile()
 
 		app = moduleFixture.createNestApplication()
+		globalSetup(app)
 		await app.init()
 		request = supertest(app.getHttpServer())
 
