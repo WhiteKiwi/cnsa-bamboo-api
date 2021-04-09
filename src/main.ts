@@ -4,6 +4,7 @@ import { ENVIRONMENT, PORT, SENTRY, VERSION } from './config'
 import { AppModule } from './app.module'
 import { ENVIRONMENT as ENV } from './utils/types'
 import { isEmpty } from 'lodash'
+import { exceptionFilters } from './utils/exception-filters'
 
 // This allows TypeScript to detect our global value
 declare global {
@@ -28,6 +29,8 @@ async function bootstrap() {
 		environment: configService.get(ENVIRONMENT),
 		version: configService.get(VERSION),
 	})
+
+	app.useGlobalFilters(...exceptionFilters)
 
 	await app.listen(port, () =>
 		console.log(`API_BACKEND listening on port ${port}`),
