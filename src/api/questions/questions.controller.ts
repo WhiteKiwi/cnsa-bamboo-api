@@ -1,11 +1,13 @@
 import {
 	Body,
+	CacheInterceptor,
 	Controller,
 	Get,
 	HttpCode,
 	HttpStatus,
 	Post,
 	Res,
+	UseInterceptors,
 } from '@nestjs/common'
 
 import { QuestionsService } from './questions.service'
@@ -16,23 +18,24 @@ import { ApiTags } from '@nestjs/swagger'
 @ApiTags('Question')
 @Controller('questions')
 export class QuestionsController {
-	constructor(private readonly reportsService: QuestionsService) {}
+	constructor(private readonly questionsService: QuestionsService) {}
 
 	@Get()
+	@UseInterceptors(CacheInterceptor)
 	async getAll(): Promise<Question[]> {
-		return await this.reportsService.find()
+		return await this.questionsService.find()
 	}
 
 	@Get('random')
 	async getRandomOne(): Promise<Question> {
-		return await this.reportsService.getRandomOne()
+		return await this.questionsService.getRandomOne()
 	}
 
 	@Post()
 	@HttpCode(HttpStatus.CREATED)
 	async create(@Body('question') question: string, @Res() res) {
 		try {
-			await this.reportsService.create({ content: question })
+			await this.questionsService.create({ content: question })
 		} catch (e) {
 			// istanbul ignore next line
 			if (e.code === 'ER_DUP_ENTRY') {

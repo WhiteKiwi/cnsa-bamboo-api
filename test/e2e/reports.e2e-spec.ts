@@ -2,7 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
 import supertest from 'supertest'
 
-import { getConfigModule, getTypeOrmModule } from '../../src/modules'
+import {
+	getCacheModule,
+	getConfigModule,
+	getTypeOrmModule,
+} from '../../src/modules'
 
 import { AppService } from '../../src/app.service'
 import { AppController } from '../../src/app.controller'
@@ -10,7 +14,7 @@ import { AppController } from '../../src/app.controller'
 import { ReportsModule } from '../../src/api/reports/reports.module'
 import { ReportsController } from '../../src/api/reports/reports.controller'
 import { REPORT_STATUS } from '../../src/utils/types'
-import { globalSetup } from '../../src/main'
+import { globalSetup } from './app-global-setup'
 
 describe('ReportController (e2e)', () => {
 	let app: INestApplication
@@ -22,6 +26,7 @@ describe('ReportController (e2e)', () => {
 			imports: [
 				getConfigModule({ test: true }),
 				getTypeOrmModule(),
+				getCacheModule(),
 				ReportsModule,
 			],
 			controllers: [AppController],
