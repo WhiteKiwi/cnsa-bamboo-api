@@ -1,13 +1,11 @@
 import {
 	Body,
-	CacheInterceptor,
 	Controller,
 	Get,
 	HttpCode,
 	HttpStatus,
 	Post,
 	Res,
-	UseInterceptors,
 } from '@nestjs/common'
 
 import { QuestionsService } from './questions.service'
@@ -21,7 +19,6 @@ export class QuestionsController {
 	constructor(private readonly questionsService: QuestionsService) {}
 
 	@Get()
-	@UseInterceptors(CacheInterceptor)
 	async getAll(): Promise<Question[]> {
 		return await this.questionsService.find()
 	}
