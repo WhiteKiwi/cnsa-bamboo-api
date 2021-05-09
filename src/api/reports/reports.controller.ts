@@ -4,7 +4,7 @@ import { Cache } from 'cache-manager'
 import { ReportsService } from './reports.service'
 import { Report } from '../../typeorm/entities'
 
-import { REPORT_STATUS } from '../../utils/types'
+import { ReportStatus } from '../../utils/types'
 import { UpperCasePipe } from '../../utils/pipes'
 
 import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger'
@@ -20,12 +20,12 @@ export class ReportsController {
 	@ApiOperation({
 		summary: '제보들을 조회합니다',
 	})
-	@ApiQuery({ name: 'status', enum: REPORT_STATUS, required: false })
+	@ApiQuery({ name: 'status', enum: ReportStatus, required: false })
 	// TODO: @ApiResponse
 	@Get()
 	async find(
 		@Query('status', UpperCasePipe)
-		status?: REPORT_STATUS,
+		status?: ReportStatus,
 	): Promise<Report[]> {
 		const cachedValue = await this.cacheManager.get<Report[]>(
 			`reports.${status}`,
