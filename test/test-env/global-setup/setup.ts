@@ -1,8 +1,8 @@
-import { setupMysql } from './mysql'
+import { setupPostgres } from './postgres'
 import { setupFixtures } from './fixtures'
 
 export default async () => {
-	await setupMysql()
+	await setupPostgres()
 	await setupFixtures()
 
 	console.log('Setup complete!')

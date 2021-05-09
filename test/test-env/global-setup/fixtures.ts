@@ -11,7 +11,13 @@ export async function setupFixtures() {
 
 	const connection = await getConnection()
 
-	await connection.query('SET FOREIGN_KEY_CHECKS = 0')
+	// Turn off foreign key checks
+	for (const entity of connection.entityMetadatas) {
+		const repository = await connection.getRepository(entity.name)
+		await repository.query(
+			`ALTER TABLE ${entity.tableName} DISABLE TRIGGER ALL`,
+		)
+	}
 
 	for (const entityName of Object.keys(fixtures)) {
 		const repository = await connection.getRepository(entityName)
@@ -27,5 +33,11 @@ export async function setupFixtures() {
 		}
 	}
 
-	await connection.query('SET FOREIGN_KEY_CHECKS = 1')
+	// Turn on foreign key checks
+	for (const entity of connection.entityMetadatas) {
+		const repository = await connection.getRepository(entity.name)
+		await repository.query(
+			`ALTER TABLE ${entity.tableName} ENABLE TRIGGER ALL`,
+		)
+	}
 }

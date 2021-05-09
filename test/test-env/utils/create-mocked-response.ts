@@ -1,7 +1,7 @@
 import { HttpStatus } from '@nestjs/common'
 import { Response } from 'express'
 
-export function getMockedResponse() {
+export function createMockedResponse() {
 	const response: Response | any = {
 		headers: {},
 		httpStatus: undefined,

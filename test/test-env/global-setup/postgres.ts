@@ -14,7 +14,7 @@ import { Connection, createConnection } from 'typeorm'
 const IMAGE_NAME = `bamboo-test-db`
 const CONTAINER_NAME = 'bamboo-test-db'
 
-export async function setupMysql() {
+export async function setupPostgres() {
 	let connection: Connection
 	console.log('Start to set up the db')
 
@@ -33,7 +33,7 @@ export async function setupMysql() {
 		await runDockerContainer(
 			CONTAINER_NAME,
 			IMAGE_NAME,
-			'-d --rm -p 3306:3306',
+			'-d --rm -p 5432:5432',
 		)
 
 		// DB 실행 확인
@@ -41,7 +41,7 @@ export async function setupMysql() {
 		await sleep(20000)
 
 		await createConnection({
-			type: 'mysql',
+			type: 'postgres',
 			host: DEFAULT.TYPEORM.HOST,
 			port: DEFAULT.TYPEORM.PORT,
 			database: DEFAULT.TYPEORM.DATABASE,
@@ -67,7 +67,7 @@ export async function setupMysql() {
 
 		// DB 초기화
 		connection = await createConnection({
-			type: 'mysql',
+			type: 'postgres',
 			host: DEFAULT.TYPEORM.HOST,
 			port: DEFAULT.TYPEORM.PORT,
 			database: DEFAULT.TYPEORM.DATABASE,
@@ -89,13 +89,9 @@ export async function setupMysql() {
 			migrationsRun: true,
 		})
 
-		await connection.query('SET FOREIGN_KEY_CHECKS = 0')
-
 		for (const entity of connection.entityMetadatas) {
 			const repository = await connection.getRepository(entity.name)
-			await repository.query(`TRUNCATE TABLE \`${entity.tableName}\``)
+			await repository.query(`TRUNCATE TABLE ${entity.tableName} CASCADE`)
 		}
-
-		await connection.query('SET FOREIGN_KEY_CHECKS = 1')
 	}
 }
