@@ -3,14 +3,17 @@ import { Question } from '../../../src/typeorm/entities'
 function createQuestion({
 	id,
 	content,
+	answers = [],
 }: {
 	id?: number
 	content: string
+	answers?: string[]
 }): Question {
 	const question = new Question()
 
 	question.id = id
 	question.content = content
+	question.answers = answers
 
 	return question
 }
