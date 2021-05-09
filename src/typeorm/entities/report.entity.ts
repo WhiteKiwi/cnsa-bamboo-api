@@ -4,7 +4,7 @@ import { PrimaryIdWithDateColumns } from '../entity-bases'
 
 @Entity({ name: 'reports' })
 export class Report extends PrimaryIdWithDateColumns {
-	@Column('longtext')
+	@Column('text')
 	content: string
 
 	@Column('enum', {

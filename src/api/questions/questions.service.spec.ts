@@ -65,7 +65,7 @@ describe('QuestionsService', () => {
 		try {
 			await service.create({ content: question })
 		} catch (e) {
-			expect(e.code).toBe('ER_DUP_ENTRY')
+			expect(e.code).toBe('23505')
 		}
 	})
 })

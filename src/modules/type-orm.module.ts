@@ -8,7 +8,7 @@ export function getTypeOrmModule() {
 	return TypeOrmModule.forRootAsync({
 		imports: [ConfigModule],
 		useFactory: (configService: ConfigService) => ({
-			type: 'mysql',
+			type: 'postgres',
 			host: configService.get(TYPEORM.HOST),
 			port: +configService.get<number>(TYPEORM.PORT),
 			database: configService.get(TYPEORM.DATABASE),

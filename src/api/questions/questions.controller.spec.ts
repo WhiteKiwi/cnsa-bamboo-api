@@ -7,11 +7,12 @@ import {
 	getTypeOrmModule,
 } from '../../modules'
 import { sleep } from '../../../test/test-env/utils'
-import { getMockedResponse } from '../../../test/test-env/utils'
+import { createMockedResponse } from '../../../test/test-env/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
 import { Question } from '../../typeorm/entities'
+import { HttpStatus } from '@nestjs/common'
 
 describe('QuestionsController', () => {
 	let controller: QuestionsController
@@ -62,7 +63,7 @@ describe('QuestionsController', () => {
 
 	it('Should be create question', async () => {
 		const question = '감자의 키는?'
-		await controller.create(question, getMockedResponse())
+		await controller.create(question, createMockedResponse())
 
 		const data = await questionRepository.find({ content: question })
 
@@ -71,7 +72,11 @@ describe('QuestionsController', () => {
 
 	it('Should be return 409 Conflict', async () => {
 		const question = 'ADRFSGABVDFS'
-		await controller.create(question, getMockedResponse())
-		await controller.create(question, getMockedResponse())
+
+		await controller.create(question, createMockedResponse())
+		const mockedResponse = createMockedResponse()
+		await controller.create(question, mockedResponse)
+
+		expect(mockedResponse.httpStatus).toBe(HttpStatus.CONFLICT)
 	})
 })

@@ -38,7 +38,7 @@ export class QuestionsController {
 			await this.questionsService.create({ content: question })
 		} catch (e) {
 			// istanbul ignore next line
-			if (e.code === 'ER_DUP_ENTRY') {
+			if (e?.code === '23505') {
 				res.status(HttpStatus.CONFLICT)
 				// istanbul ignore next line
 			} else {
