@@ -4,7 +4,7 @@ import { ENVIRONMENT } from './constants'
 import { ENVIRONMENT as ENV } from '../utils/types'
 import { isArray } from 'lodash'
 
-export default flatMapToJoiObject({
+export default flatJoiObject({
 	PORT: makeJoiSchema({
 		type: 'number',
 		defaultValue: DEFAULT.PORT,
@@ -94,7 +94,7 @@ function makeJoiSchema(
 interface SchemaObject {
 	[key: string]: SchemaObject | Joi.AnySchema
 }
-function flatMapToJoiObject(obj: SchemaObject): Joi.ObjectSchema {
+function flatJoiObject(obj: SchemaObject): Joi.ObjectSchema {
 	const convertedObj: { [key: string]: Joi.AnySchema } = {}
 	const keys = Object.keys(obj)
 	for (const key of keys) {
