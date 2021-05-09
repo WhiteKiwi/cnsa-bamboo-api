@@ -1,5 +1,5 @@
-import Joi from 'joi'
 import DEFAULT from './default'
+import Joi, { Types as JoiTypes } from 'joi'
 import { ENVIRONMENT } from './constants'
 import { Environment } from '../utils/types'
 import { isArray } from 'lodash'
@@ -31,26 +31,25 @@ export default flatJoiObject({
 })
 
 // Joi schema를 만듬
-interface makeJoiSchemaParams {
-	type?: string
+type MakeJoiSchemaParameters = {
+	type?: JoiTypes
 	allowEmpty?: boolean
 	valid?: any[]
 	defaultValue?: any
 	requiredOnDeployment?: boolean
 }
-function makeJoiSchema(
-	{
-		type = 'string',
-		allowEmpty = true,
-		valid,
-		defaultValue,
-		requiredOnDeployment = true,
-	}: makeJoiSchemaParams = {
-		type: 'string',
-		allowEmpty: true,
-		requiredOnDeployment: true,
-	},
-): Joi.AnySchema {
+const DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS: MakeJoiSchemaParameters = {
+	type: 'number',
+	allowEmpty: true,
+	requiredOnDeployment: true,
+}
+function makeJoiSchema({
+	type = DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS.type,
+	allowEmpty = DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS.allowEmpty,
+	valid,
+	defaultValue,
+	requiredOnDeployment = DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS.requiredOnDeployment,
+}: MakeJoiSchemaParameters = DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS): Joi.AnySchema {
 	let schmea = Joi[type]()
 
 	// istanbul ignore next line
@@ -91,7 +90,7 @@ function makeJoiSchema(
  * 		SENTRY_ESN: Joi.string(),
  * 	}
  */
-interface SchemaObject {
+type SchemaObject = {
 	[key: string]: SchemaObject | Joi.AnySchema
 }
 function flatJoiObject(obj: SchemaObject): Joi.ObjectSchema {
