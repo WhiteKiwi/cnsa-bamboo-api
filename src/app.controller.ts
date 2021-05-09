@@ -17,7 +17,7 @@ export class AppController {
 		type: GetVersionResponseDto,
 	})
 	@Get()
-	getVersion(): any {
+	getVersion(): GetVersionResponseDto {
 		return { version: this.appService.getVersion() }
 	}
 }
