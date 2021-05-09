@@ -1,6 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsService } from './questions.service'
-import { getConfigModule, getTypeOrmModule } from '../../modules'
+import {
+	getCacheModule,
+	getConfigModule,
+	getTypeOrmModule,
+} from '../../modules'
 import { sleep } from '../../../test/test-env/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -16,6 +20,7 @@ describe('QuestionsService', () => {
 			imports: [
 				getConfigModule({ test: true }),
 				getTypeOrmModule(),
+				getCacheModule(),
 				TypeOrmModule.forFeature([Question]),
 			],
 			providers: [QuestionsService],
