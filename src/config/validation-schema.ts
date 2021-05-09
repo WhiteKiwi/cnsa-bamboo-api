@@ -1,8 +1,14 @@
-import DEFAULT from './default'
 import Joi, { Types as JoiTypes } from 'joi'
+import DEFAULT from './default'
 import { ENVIRONMENT } from './constants'
 import { Environment } from '../utils/types'
 import { isArray } from 'lodash'
+
+const DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS: MakeJoiSchemaParameters = {
+	type: 'string',
+	allowEmpty: true,
+	requiredOnDeployment: true,
+}
 
 export default flatJoiObject({
 	PORT: makeJoiSchema({
@@ -25,6 +31,25 @@ export default flatJoiObject({
 		USERNAME: makeJoiSchema({ defaultValue: DEFAULT.TYPEORM.USERNAME }),
 		PASSWORD: makeJoiSchema({ defaultValue: DEFAULT.TYPEORM.PASSWORD }),
 	},
+	// TODO: Redis 적용 후 requiredOnDeployment: true로 변경
+	REDIS: {
+		HOST: makeJoiSchema({
+			defaultValue: DEFAULT.REDIS.HOST,
+			requiredOnDeployment: false,
+		}),
+		PORT: makeJoiSchema({
+			defaultValue: DEFAULT.REDIS.PORT,
+			requiredOnDeployment: false,
+		}),
+		USER: makeJoiSchema({
+			defaultValue: DEFAULT.REDIS.USER,
+			requiredOnDeployment: false,
+		}),
+		PASSWORD: makeJoiSchema({
+			defaultValue: DEFAULT.REDIS.PASSWORD,
+			requiredOnDeployment: false,
+		}),
+	},
 	SENTRY: {
 		DSN: makeJoiSchema(),
 	},
@@ -37,11 +62,6 @@ type MakeJoiSchemaParameters = {
 	valid?: any[]
 	defaultValue?: any
 	requiredOnDeployment?: boolean
-}
-const DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS: MakeJoiSchemaParameters = {
-	type: 'number',
-	allowEmpty: true,
-	requiredOnDeployment: true,
 }
 function makeJoiSchema({
 	type = DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS.type,
