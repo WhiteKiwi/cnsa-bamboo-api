@@ -8,7 +8,7 @@ type GetCacheModuleParameters = {
 }
 const DEFAULT_GET_CACHE_MODULE_PARAMETERS: GetCacheModuleParameters = {
 	type: 'mem-cache',
-	ttl: 5,
+	ttl: 60,
 }
 export function getCacheModule({
 	type = DEFAULT_GET_CACHE_MODULE_PARAMETERS.type,
