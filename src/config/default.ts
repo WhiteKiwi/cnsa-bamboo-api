@@ -6,8 +6,15 @@ export const TYPEORM = {
 	USERNAME: 'testuser',
 	PASSWORD: 'TEST1234!',
 }
+export const REDIS = {
+	HOST: 'localhost',
+	PORT: 6379,
+	USER: 'testuser',
+	PASSWORD: 'TEST1234!',
+}
 
 export default {
 	PORT,
 	TYPEORM,
+	REDIS,
 }
