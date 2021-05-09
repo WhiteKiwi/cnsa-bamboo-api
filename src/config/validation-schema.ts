@@ -1,7 +1,7 @@
 import Joi from 'joi'
 import DEFAULT from './default'
 import { ENVIRONMENT } from './constants'
-import { ENVIRONMENT as ENV } from '../utils/types'
+import { Environment } from '../utils/types'
 import { isArray } from 'lodash'
 
 export default flatJoiObject({
@@ -11,8 +11,8 @@ export default flatJoiObject({
 		requiredOnDeployment: false,
 	}),
 	ENVIRONMENT: makeJoiSchema({
-		defaultValue: ENV.DEVELOPMENT,
-		valid: Object.values(ENV),
+		defaultValue: Environment.DEVELOPMENT,
+		valid: Object.values(Environment),
 		requiredOnDeployment: false,
 	}),
 	TYPEORM: {
@@ -66,11 +66,11 @@ function makeJoiSchema(
 	if (requiredOnDeployment)
 		schmea = schmea.when(ENVIRONMENT, [
 			{
-				is: ENV.PRODUCTION,
+				is: Environment.PRODUCTION,
 				then: Joi[type]().required(),
 			},
 			{
-				is: ENV.STAGING,
+				is: Environment.STAGING,
 				then: Joi[type]().required(),
 			},
 		])

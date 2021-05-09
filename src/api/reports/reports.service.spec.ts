@@ -5,7 +5,7 @@ import { getConfigModule, getTypeOrmModule } from '../../modules'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
 import { Report } from '../../typeorm/entities'
-import { REPORT_STATUS } from '../../utils/types'
+import { ReportStatus } from '../../utils/types'
 
 describe('ReportsService', () => {
 	let service: ReportsService
@@ -34,24 +34,24 @@ describe('ReportsService', () => {
 
 	it('Reports should be filterd by status', async () => {
 		const reportedReports = await service.find({
-			status: REPORT_STATUS.REPORTED,
+			status: ReportStatus.REPORTED,
 		})
 		for (const report of reportedReports) {
-			expect(report.status).toBe(REPORT_STATUS.REPORTED)
+			expect(report.status).toBe(ReportStatus.REPORTED)
 		}
 
 		const appliedReports = await service.find({
-			status: REPORT_STATUS.APPLIED,
+			status: ReportStatus.APPLIED,
 		})
 		for (const report of appliedReports) {
-			expect(report.status).toBe(REPORT_STATUS.APPLIED)
+			expect(report.status).toBe(ReportStatus.APPLIED)
 		}
 
 		const deniedReports = await service.find({
-			status: REPORT_STATUS.DENIED,
+			status: ReportStatus.DENIED,
 		})
 		for (const report of deniedReports) {
-			expect(report.status).toBe(REPORT_STATUS.DENIED)
+			expect(report.status).toBe(ReportStatus.DENIED)
 		}
 	})
 })

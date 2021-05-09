@@ -9,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ReportsController } from './reports.controller'
 import { ReportsService } from './reports.service'
 import { Report } from '../../typeorm/entities'
-import { REPORT_STATUS } from '../../utils/types'
+import { ReportStatus } from '../../utils/types'
 
 describe('ReportsController', () => {
 	let controller: ReportsController
@@ -39,19 +39,19 @@ describe('ReportsController', () => {
 	})
 
 	it('Reports should be filterd by status', async () => {
-		const reportedReports = await controller.find(REPORT_STATUS.REPORTED)
+		const reportedReports = await controller.find(ReportStatus.REPORTED)
 		for (const report of reportedReports) {
-			expect(report.status).toBe(REPORT_STATUS.REPORTED)
+			expect(report.status).toBe(ReportStatus.REPORTED)
 		}
 
-		const appliedReports = await controller.find(REPORT_STATUS.APPLIED)
+		const appliedReports = await controller.find(ReportStatus.APPLIED)
 		for (const report of appliedReports) {
-			expect(report.status).toBe(REPORT_STATUS.APPLIED)
+			expect(report.status).toBe(ReportStatus.APPLIED)
 		}
 
-		const deniedReports = await controller.find(REPORT_STATUS.DENIED)
+		const deniedReports = await controller.find(ReportStatus.DENIED)
 		for (const report of deniedReports) {
-			expect(report.status).toBe(REPORT_STATUS.DENIED)
+			expect(report.status).toBe(ReportStatus.DENIED)
 		}
 	})
 })

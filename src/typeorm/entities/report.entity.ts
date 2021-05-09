@@ -1,5 +1,5 @@
 import { Entity, Column, Index } from 'typeorm'
-import { REPORT_STATUS } from '../../utils/types'
+import { ReportStatus } from '../../utils/types'
 import { PrimaryIdWithDateColumns } from '../entity-bases'
 
 @Entity({ name: 'reports' })
@@ -8,8 +8,8 @@ export class Report extends PrimaryIdWithDateColumns {
 	content: string
 
 	@Column('enum', {
-		enum: REPORT_STATUS,
-		default: REPORT_STATUS.REPORTED,
+		enum: ReportStatus,
+		default: ReportStatus.REPORTED,
 	})
 	@Index('status_index')
 	status: string

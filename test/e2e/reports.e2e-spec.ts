@@ -13,7 +13,7 @@ import { AppController } from '../../src/app.controller'
 
 import { ReportsModule } from '../../src/api/reports/reports.module'
 import { ReportsController } from '../../src/api/reports/reports.controller'
-import { REPORT_STATUS } from '../../src/utils/types'
+import { ReportStatus } from '../../src/utils/types'
 import { globalSetup } from './app-global-setup'
 
 describe('ReportController (e2e)', () => {
@@ -50,24 +50,24 @@ describe('ReportController (e2e)', () => {
 
 	it('Reports should be filterd by status', async () => {
 		const { body: reportedReports } = await request.get('/reports').query({
-			status: REPORT_STATUS.REPORTED,
+			status: ReportStatus.REPORTED,
 		})
 		for (const report of reportedReports) {
-			expect(report.status).toBe(REPORT_STATUS.REPORTED)
+			expect(report.status).toBe(ReportStatus.REPORTED)
 		}
 
 		const { body: appliedReports } = await request.get('/reports').query({
-			status: REPORT_STATUS.APPLIED,
+			status: ReportStatus.APPLIED,
 		})
 		for (const report of appliedReports) {
-			expect(report.status).toBe(REPORT_STATUS.APPLIED)
+			expect(report.status).toBe(ReportStatus.APPLIED)
 		}
 
 		const { body: deniedReports } = await request.get('/reports').query({
-			status: REPORT_STATUS.DENIED,
+			status: ReportStatus.DENIED,
 		})
 		for (const report of deniedReports) {
-			expect(report.status).toBe(REPORT_STATUS.DENIED)
+			expect(report.status).toBe(ReportStatus.DENIED)
 		}
 	})
 })

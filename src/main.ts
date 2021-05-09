@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { ENVIRONMENT, PORT, SENTRY, VERSION } from './config'
 import { AppModule } from './app.module'
-import { ENVIRONMENT as ENV } from './utils/types'
+import { Environment } from './utils/types'
 import { isEmpty } from 'lodash'
 import { json, urlencoded } from 'express'
 import { exceptionFilters } from './utils/exception-filters'
@@ -26,7 +26,7 @@ async function bootstrap() {
 	const configService: ConfigService = app.get(ConfigService)
 	const port = configService.get<number>(PORT)
 
-	if (configService.get(ENVIRONMENT) !== ENV.PRODUCTION) {
+	if (configService.get(ENVIRONMENT) !== Environment.PRODUCTION) {
 		setupSwagger(app)
 	}
 	setupSentry({
@@ -62,10 +62,14 @@ function setupSentry({
 }: {
 	app
 	dsn: string
-	environment: ENV
+	environment: Environment
 	version: string
 }) {
-	const debug = [ENV.TEST, ENV.LOCAL, ENV.DEVELOPMENT].includes(environment)
+	const debug = [
+		Environment.TEST,
+		Environment.LOCAL,
+		Environment.DEVELOPMENT,
+	].includes(environment)
 	Sentry.init({
 		dsn,
 		environment,
