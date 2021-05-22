@@ -9,20 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # Install dependencies
-      - name: Cache node modules
-        id: node-cache
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{env.cache-name}}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{env.cache-name}}-
-      - name: Install dependencies
-        if: steps.node-cache.outputs.cache-hit != 'true'
-        run: npm install
 
       # Build migrations
       - name: Cache migrations
@@ -36,16 +22,16 @@ jobs:
             ${{ runner.os }}-${{env.cache-name}}-
       - name: Build
         if: steps.migration-cache.outputs.cache-hit != 'true'
-        run: npm run build
+        run: yarn run build
 
       # Test
       - name: Test
         run: |
-          npm run test:cov
+          yarn run test:cov
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Test(e2e)
         run: |
-          npm run test:e2e
+          yarn run test:e2e
