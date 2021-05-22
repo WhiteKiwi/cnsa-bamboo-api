@@ -1,4 +1,4 @@
-FROM 138497848618.dkr.ecr.ap-northeast-2.amazonaws.com/node-server-base:1.0.0
+FROM 138497848618.dkr.ecr.ap-northeast-2.amazonaws.com/node-server-base:1.1.0
 LABEL version="0.0.1"
 
 # Clone repository
@@ -9,5 +9,5 @@ WORKDIR cnsa-bamboo-api
 
 # Start
 COPY .env .env
-RUN npm install
-ENTRYPOINT [ "npm", "start" ]
+RUN yarn build
+ENTRYPOINT [ "yarn", "run", "start:prod" ]
