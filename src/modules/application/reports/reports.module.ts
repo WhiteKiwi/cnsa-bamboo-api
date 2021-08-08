@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { Report } from '../../typeorm/entities'
+import { Report } from '../../../typeorm/entities'
 import { ReportsController } from './reports.controller'
 import { ReportsService } from './reports.service'
 

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 
-import { Question } from '../../typeorm/entities'
+import { Question } from '../../../typeorm/entities'
 import { QuestionsService } from './questions.service'
 
 @ApiTags('Question')

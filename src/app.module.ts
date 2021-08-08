@@ -5,13 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 
 import path from 'path'
 
-import { QuestionsModule } from './api/questions/questions.module'
-import { ReportsModule } from './api/reports/reports.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { TYPEORM } from './config'
 import configuration from './config/configuration'
 import validationSchema from './config/validation-schema'
+import { ApplicationModule } from './modules/application/application.module'
 import { ravenInterceptor } from './utils/interceptors/raven'
 
 @Module({
@@ -44,8 +43,7 @@ import { ravenInterceptor } from './utils/interceptors/raven'
 			}),
 			inject: [ConfigService],
 		}),
-		ReportsModule,
-		QuestionsModule,
+		ApplicationModule,
 	],
 	controllers: [AppController],
 	providers: [

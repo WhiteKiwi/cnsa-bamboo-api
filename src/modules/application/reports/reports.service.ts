@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { isEmpty } from 'lodash'
 import { Repository } from 'typeorm'
 
-import { Report } from '../../typeorm/entities'
+import { Report } from '../../../typeorm/entities'
 
 @Injectable()
 export class ReportsService {
