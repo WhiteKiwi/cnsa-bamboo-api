@@ -1,13 +1,15 @@
-import { NestFactory } from '@nestjs/core'
-import { ConfigService } from '@nestjs/config'
 import { INestApplication, ValidationPipe } from '@nestjs/common'
-import { ENVIRONMENT, PORT, SENTRY, VERSION } from './config'
-import { AppModule } from './app.module'
-import { Environment } from './utils/types'
-import { isEmpty } from 'lodash'
+import { ConfigService } from '@nestjs/config'
+import { NestFactory } from '@nestjs/core'
+
 import { json, urlencoded } from 'express'
-import { exceptionFilters } from './utils/exception-filters'
 import helmet from 'helmet'
+import { isEmpty } from 'lodash'
+
+import { AppModule } from './app.module'
+import { ENVIRONMENT, PORT, SENTRY, VERSION } from './config'
+import { exceptionFilters } from './utils/exception-filters'
+import { Environment } from './utils/types'
 
 // This allows TypeScript to detect our global value
 declare global {
@@ -50,9 +52,9 @@ async function bootstrap() {
 bootstrap()
 
 // Sentry
+import { RewriteFrames } from '@sentry/integrations'
 import * as Sentry from '@sentry/node'
 import * as Tracing from '@sentry/tracing'
-import { RewriteFrames } from '@sentry/integrations'
 
 function setupSentry({
 	app,
@@ -103,7 +105,8 @@ function setupSentry({
 }
 
 // Swagger
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+
 import { version } from '../package.json'
 
 function setupSwagger(app: INestApplication) {

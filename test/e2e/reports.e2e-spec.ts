@@ -1,18 +1,17 @@
-import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
+import { Test, TestingModule } from '@nestjs/testing'
+
 import supertest from 'supertest'
 
+import { ReportsController } from '../../src/api/reports/reports.controller'
+import { ReportsModule } from '../../src/api/reports/reports.module'
+import { AppController } from '../../src/app.controller'
+import { AppService } from '../../src/app.service'
 import {
 	getCacheModule,
 	getConfigModule,
 	getTypeOrmModule,
 } from '../../src/modules'
-
-import { AppService } from '../../src/app.service'
-import { AppController } from '../../src/app.controller'
-
-import { ReportsModule } from '../../src/api/reports/reports.module'
-import { ReportsController } from '../../src/api/reports/reports.controller'
 import { ReportStatus } from '../../src/utils/types'
 import { globalSetup } from './app-global-setup'
 

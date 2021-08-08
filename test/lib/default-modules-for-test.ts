@@ -1,6 +1,8 @@
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+
 import path from 'path'
+
 import { TYPEORM } from '../../src/config'
 import configuration from '../../src/config/configuration'
 import validationSchema from '../../src/config/validation-schema'

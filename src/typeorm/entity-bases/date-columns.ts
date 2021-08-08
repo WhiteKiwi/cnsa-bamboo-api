@@ -1,4 +1,5 @@
 import { UpdateDateColumn } from 'typeorm'
+
 import { TimestampTransformer } from '../transformers'
 import { CreatedAt } from '.'
 

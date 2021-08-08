@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { isEmpty } from 'lodash'
 
+import { isEmpty } from 'lodash'
 import { Repository } from 'typeorm'
+
 import { Report } from '../../typeorm/entities'
 
 @Injectable()

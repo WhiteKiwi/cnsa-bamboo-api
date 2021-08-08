@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { defaultModulesForTest } from '../../../test/lib'
-
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { ReportsController } from './reports.controller'
-import { ReportsService } from './reports.service'
+
+import { defaultModulesForTest } from '../../../test/lib'
 import { Report } from '../../typeorm/entities'
 import { ReportStatus } from '../../utils/types'
+import { ReportsController } from './reports.controller'
+import { ReportsService } from './reports.service'
 
 describe('ReportsController', () => {
 	let controller: ReportsController

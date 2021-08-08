@@ -1,8 +1,9 @@
 import Joi, { Types as JoiTypes } from 'joi'
-import DEFAULT from './default'
-import { ENVIRONMENT } from './constants'
-import { Environment } from '../utils/types'
 import { isArray } from 'lodash'
+
+import { Environment } from '../utils/types'
+import { ENVIRONMENT } from './constants'
+import DEFAULT from './default'
 
 const DEFAULT_MAKE_JOI_SCHEMA_PARAMETERS: MakeJoiSchemaParameters = {
 	type: 'string',

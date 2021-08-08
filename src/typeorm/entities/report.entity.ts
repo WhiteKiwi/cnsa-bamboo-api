@@ -1,4 +1,5 @@
-import { Entity, Column, Index } from 'typeorm'
+import { Column, Entity, Index } from 'typeorm'
+
 import { ReportStatus } from '../../utils/types'
 import { PrimaryIdWithDateColumns } from '../entity-bases'
 

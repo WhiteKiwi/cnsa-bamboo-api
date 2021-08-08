@@ -1,4 +1,7 @@
 import path from 'path'
+import { Connection, createConnection } from 'typeorm'
+
+import DEFAULT from '../../../src/config/default'
 import {
 	buildDockerImage,
 	isDockerContainerRunning,
@@ -7,9 +10,6 @@ import {
 	sleep,
 	teardownDockerContainer,
 } from '../utils'
-
-import DEFAULT from '../../../src/config/default'
-import { Connection, createConnection } from 'typeorm'
 
 const IMAGE_NAME = `bamboo-test-db`
 const CONTAINER_NAME = 'bamboo-test-db'
@@ -50,13 +50,13 @@ export async function setupPostgres() {
 			entities: [
 				path.join(
 					__dirname,
-					'../../../server/**/src/typeorm/entities/*.js',
+					'../../../dist/**/src/typeorm/entities/*.js',
 				),
 			],
 			migrations: [
 				path.join(
 					__dirname,
-					'../../../server/**/src/typeorm/migrations/*.js',
+					'../../../dist/**/src/typeorm/migrations/*.js',
 				),
 			],
 			migrationsTableName: 'migrations',
@@ -76,13 +76,13 @@ export async function setupPostgres() {
 			entities: [
 				path.join(
 					__dirname,
-					'../../../server/**/src/typeorm/entities/*.js',
+					'../../../dist/**/src/typeorm/entities/*.js',
 				),
 			],
 			migrations: [
 				path.join(
 					__dirname,
-					'../../../server/**/src/typeorm/migrations/*.js',
+					'../../../dist/**/src/typeorm/migrations/*.js',
 				),
 			],
 			migrationsTableName: 'migrations',

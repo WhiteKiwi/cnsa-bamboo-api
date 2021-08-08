@@ -1,15 +1,15 @@
-import { Test, TestingModule } from '@nestjs/testing'
 import { HttpStatus, INestApplication } from '@nestjs/common'
+import { Test, TestingModule } from '@nestjs/testing'
+
 import supertest from 'supertest'
 
+import { AppController } from '../../src/app.controller'
+import { AppService } from '../../src/app.service'
 import {
 	getCacheModule,
 	getConfigModule,
 	getTypeOrmModule,
 } from '../../src/modules'
-
-import { AppService } from '../../src/app.service'
-import { AppController } from '../../src/app.controller'
 import { globalSetup } from './app-global-setup'
 
 describe('AppController (e2e)', () => {

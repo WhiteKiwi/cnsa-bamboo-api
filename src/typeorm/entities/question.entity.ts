@@ -1,4 +1,5 @@
-import { Entity, Column } from 'typeorm'
+import { Column, Entity } from 'typeorm'
+
 import { PrimaryIdWithDateColumns } from '../entity-bases'
 
 @Entity({ name: 'questions' })

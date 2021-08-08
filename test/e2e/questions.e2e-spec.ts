@@ -1,21 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing'
 import { HttpStatus, INestApplication } from '@nestjs/common'
-import supertest from 'supertest'
+import { Test, TestingModule } from '@nestjs/testing'
 
+import supertest from 'supertest'
+import { getRepository, Repository } from 'typeorm'
+
+import { QuestionsController } from '../../src/api/questions/questions.controller'
+import { QuestionsModule } from '../../src/api/questions/questions.module'
+import { AppController } from '../../src/app.controller'
+import { AppService } from '../../src/app.service'
 import {
 	getCacheModule,
 	getConfigModule,
 	getTypeOrmModule,
 } from '../../src/modules'
-import { sleep } from '../test-env/utils'
-
-import { AppService } from '../../src/app.service'
-import { AppController } from '../../src/app.controller'
-
-import { QuestionsModule } from '../../src/api/questions/questions.module'
-import { QuestionsController } from '../../src/api/questions/questions.controller'
-import { getRepository, Repository } from 'typeorm'
 import { Question } from '../../src/typeorm/entities'
+import { sleep } from '../test-env/utils'
 import { globalSetup } from './app-global-setup'
 
 describe('QuestionController (e2e)', () => {

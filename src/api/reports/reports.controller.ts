@@ -1,12 +1,10 @@
 import { Controller, Get, Query } from '@nestjs/common'
+import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
 
-import { ReportsService } from './reports.service'
 import { Report } from '../../typeorm/entities'
-
-import { ReportStatus } from '../../utils/types'
 import { UpperCasePipe } from '../../utils/pipes'
-
-import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger'
+import { ReportStatus } from '../../utils/types'
+import { ReportsService } from './reports.service'
 
 @ApiTags('Report')
 @Controller('reports')

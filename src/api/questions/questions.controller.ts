@@ -7,11 +7,10 @@ import {
 	Post,
 	Res,
 } from '@nestjs/common'
-
-import { QuestionsService } from './questions.service'
-import { Question } from '../../typeorm/entities'
-
 import { ApiTags } from '@nestjs/swagger'
+
+import { Question } from '../../typeorm/entities'
+import { QuestionsService } from './questions.service'
 
 @ApiTags('Question')
 @Controller('questions')

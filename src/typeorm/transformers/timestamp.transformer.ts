@@ -1,5 +1,5 @@
-import { ValueTransformer } from 'typeorm'
 import { isDate } from 'lodash'
+import { ValueTransformer } from 'typeorm'
 
 export const TimestampTransformer: ValueTransformer = {
 	from(value: any): number {

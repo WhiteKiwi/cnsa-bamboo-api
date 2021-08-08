@@ -1,14 +1,15 @@
+import { HttpStatus } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import { QuestionsController } from './questions.controller'
-import { QuestionsService } from './questions.service'
+import { TypeOrmModule } from '@nestjs/typeorm'
+
+import { getRepository, Repository } from 'typeorm'
+
+import { defaultModulesForTest } from '../../../test/lib'
 import { sleep } from '../../../test/test-env/utils'
 import { createMockedResponse } from '../../../test/test-env/utils'
-
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { getRepository, Repository } from 'typeorm'
 import { Question } from '../../typeorm/entities'
-import { HttpStatus } from '@nestjs/common'
-import { defaultModulesForTest } from '../../../test/lib'
+import { QuestionsController } from './questions.controller'
+import { QuestionsService } from './questions.service'
 
 describe('QuestionsController', () => {
 	let controller: QuestionsController

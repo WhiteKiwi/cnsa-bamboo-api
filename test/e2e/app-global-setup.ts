@@ -1,7 +1,9 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common'
+
 import { json, urlencoded } from 'express'
-import { exceptionFilters } from '../../src/utils/exception-filters'
 import helmet from 'helmet'
+
+import { exceptionFilters } from '../../src/utils/exception-filters'
 
 // Export for e2e testing modules
 export function globalSetup(app: INestApplication) {
