@@ -1541,13 +1541,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cache-manager@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@types/cache-manager@npm:3.4.0"
-  checksum: 11a5d923d246e5956e23ccf6e02126c4abf1c1e57e057cd5fa758941e54eb764c504137d4623bc0a972e68edfc37f241bfd0b316f176e1211fbc2c36846e097e
-  languageName: node
-  linkType: hard
-
 "@types/cacheable-request@npm:^6.0.1":
   version: 6.0.1
   resolution: "@types/cacheable-request@npm:6.0.1"
@@ -3023,13 +3016,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:3.2.0":
-  version: 3.2.0
-  resolution: "async@npm:3.2.0"
-  checksum: 5c7913c08496877a9896dc6670d3a6c64f02d350e74b9e9191194959c473414a0732539ebdfec0fd2f34c20f439714773a30c20e0e68eb27bd8ee5ec9d8ff5ba
-  languageName: node
-  linkType: hard
-
 "asynckit@npm:^0.4.0":
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
@@ -3429,26 +3415,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cache-manager-redis-store@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "cache-manager-redis-store@npm:2.0.0"
-  dependencies:
-    redis: ^3.0.2
-  checksum: 5998834887ca3793c24d0e39ec8f6877ad51c5d6d60417a74601ec6b758394d4ff9198e0d6a2621e800605a0cf9a9e64321e967d0d27e3df312e397db709021c
-  languageName: node
-  linkType: hard
-
-"cache-manager@npm:^3.4.3":
-  version: 3.4.3
-  resolution: "cache-manager@npm:3.4.3"
-  dependencies:
-    async: 3.2.0
-    lodash: ^4.17.21
-    lru-cache: 6.0.0
-  checksum: 36f5b8f30893a9b24f63fcfc8b2238eeeebc6fd2c0d8b407f3ebdeb25bdb58664e879fbc9afc8ed14e076d649aaad99c5dba449da5de4c4a236838e19e350f51
-  languageName: node
-  linkType: hard
-
 "cacheable-lookup@npm:^5.0.3":
   version: 5.0.4
   resolution: "cacheable-lookup@npm:5.0.4"
@@ -3796,7 +3762,6 @@ __metadata:
     "@sentry/node": ^6.2.4
     "@sentry/tracing": ^6.2.5
     "@sentry/types": ^6.3.6
-    "@types/cache-manager": ^3.4.0
     "@types/express": ^4.17.8
     "@types/jest": ^26.0.15
     "@types/lodash": ^4.14.168
@@ -3805,8 +3770,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^4.6.1
     "@typescript-eslint/parser": ^4.6.1
     "@yarnpkg/pnpify": ^3.0.0-rc.3
-    cache-manager: ^3.4.3
-    cache-manager-redis-store: ^2.0.0
     class-transformer: ^0.4.0
     class-validator: ^0.13.1
     eslint: ^7.12.1
@@ -4330,13 +4293,6 @@ __metadata:
   version: 1.0.0
   resolution: "delegates@npm:1.0.0"
   checksum: 7459e34d29cadd9bfd340728bfcc70ea96da5d940fb197298b523f805822680e583cba3ec34d36a18004325f1ec9de55e202a92b414d01db18cd87bb8a2ae5bd
-  languageName: node
-  linkType: hard
-
-"denque@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "denque@npm:1.5.0"
-  checksum: 3564778cda60c7dee3f1d71e397e50e6b39a8c06118aab9843b9396cb621b3191ab56d13de5237b8beee2b87bec485e8239c58ca3133472d2d1eaa3d2d518022
   languageName: node
   linkType: hard
 
@@ -7466,7 +7422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:6.0.0, lru-cache@npm:^6.0.0":
+"lru-cache@npm:^6.0.0":
   version: 6.0.0
   resolution: "lru-cache@npm:6.0.0"
   dependencies:
@@ -9024,41 +8980,6 @@ __metadata:
   dependencies:
     resolve: ^1.1.6
   checksum: 6646a6bce733282d182bf04816b15d4e2d63736b3453cf62a8568aaa1399621a73b3942315161f549e090f9a3c61bc09f4cb674f928c369a40037621e10295bd
-  languageName: node
-  linkType: hard
-
-"redis-commands@npm:^1.7.0":
-  version: 1.7.0
-  resolution: "redis-commands@npm:1.7.0"
-  checksum: cbf5d33768b1c8e1001e2a7ffdaeb6ef830c538ef812d803a1c5e6038cf03482cf0a22b29eadf1182aa02a522331826e3af0967ae75fa7883da8a139ad2fc77b
-  languageName: node
-  linkType: hard
-
-"redis-errors@npm:^1.0.0, redis-errors@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "redis-errors@npm:1.2.0"
-  checksum: b260bb64a1c8523d32a56701681ac3e5cc6bb0a4eb09f1d30729ebba397021d274216ff189909c08fe3c6b706ec8b74948e20ea410b6f69d31b35bda3fb82a59
-  languageName: node
-  linkType: hard
-
-"redis-parser@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "redis-parser@npm:3.0.0"
-  dependencies:
-    redis-errors: ^1.0.0
-  checksum: 45dbcb05bed2c80a4aac288bbefed2347ecf3508c24d542ab42efa21fd63b5aaca4208b206f05818835a2ac43abe09250c2638c11c3b0b66a5d67e83985e350f
-  languageName: node
-  linkType: hard
-
-"redis@npm:^3.0.2":
-  version: 3.1.2
-  resolution: "redis@npm:3.1.2"
-  dependencies:
-    denque: ^1.5.0
-    redis-commands: ^1.7.0
-    redis-errors: ^1.2.0
-    redis-parser: ^3.0.0
-  checksum: af9b5162aa98e3894fab9914e622019ba3e557c6e2285db419354b83fad30e971defb84600191c48985657d2c33d0c0549990fa4efdb9352e81c9727a309f691
   languageName: node
   linkType: hard
 

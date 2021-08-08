@@ -1,11 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsController } from './questions.controller'
 import { QuestionsService } from './questions.service'
-import {
-	getCacheModule,
-	getConfigModule,
-	getTypeOrmModule,
-} from '../../modules'
+import { getConfigModule, getTypeOrmModule } from '../../modules'
 import { sleep } from '../../../test/test-env/utils'
 import { createMockedResponse } from '../../../test/test-env/utils'
 
@@ -24,7 +20,6 @@ describe('QuestionsController', () => {
 			imports: [
 				getConfigModule({ test: true }),
 				getTypeOrmModule(),
-				getCacheModule(),
 				TypeOrmModule.forFeature([Question]),
 			],
 			controllers: [QuestionsController],

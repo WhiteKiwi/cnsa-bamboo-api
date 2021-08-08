@@ -31,25 +31,6 @@ export default flatJoiObject({
 		USERNAME: makeJoiSchema({ defaultValue: DEFAULT.TYPEORM.USERNAME }),
 		PASSWORD: makeJoiSchema({ defaultValue: DEFAULT.TYPEORM.PASSWORD }),
 	},
-	// TODO: Redis 적용 후 requiredOnDeployment: true로 변경
-	REDIS: {
-		HOST: makeJoiSchema({
-			defaultValue: DEFAULT.REDIS.HOST,
-			requiredOnDeployment: false,
-		}),
-		PORT: makeJoiSchema({
-			defaultValue: DEFAULT.REDIS.PORT,
-			requiredOnDeployment: false,
-		}),
-		USER: makeJoiSchema({
-			defaultValue: DEFAULT.REDIS.USER,
-			requiredOnDeployment: false,
-		}),
-		PASSWORD: makeJoiSchema({
-			defaultValue: DEFAULT.REDIS.PASSWORD,
-			requiredOnDeployment: false,
-		}),
-	},
 	SENTRY: {
 		DSN: makeJoiSchema(),
 	},

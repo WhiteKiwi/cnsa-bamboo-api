@@ -11,12 +11,6 @@ export default () => ({
 		USERNAME: process.env.TYPEORM_USERNAME,
 		PASSWORD: process.env.TYPEORM_PASSWORD,
 	},
-	REDIS: {
-		HOST: process.env.REDIS_HOST,
-		PORT: process.env.REDIS_PORT,
-		USER: process.env.REDIS_USER,
-		PASSWORD: process.env.REDIS_PASSWORD,
-	},
 	SENTRY: {
 		DSN: process.env.SENTRY_DSN,
 	},
