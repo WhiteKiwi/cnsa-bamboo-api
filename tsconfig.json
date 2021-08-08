@@ -10,7 +10,7 @@
 		"sourceMap": true,
 		"inlineSources": true,
 		"sourceRoot": "/",
-		"outDir": "./server",
+		"outDir": "./dist",
 		"baseUrl": "./",
 		"incremental": true,
 		"resolveJsonModule": true,
