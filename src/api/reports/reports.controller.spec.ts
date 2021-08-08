@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { getConfigModule, getTypeOrmModule } from '../../modules'
+import { defaultModulesForTest } from '../../../test/lib'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ReportsController } from './reports.controller'
@@ -14,8 +14,7 @@ describe('ReportsController', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			imports: [
-				getConfigModule({ test: true }),
-				getTypeOrmModule(),
+				...defaultModulesForTest,
 				TypeOrmModule.forFeature([Report]),
 			],
 			controllers: [ReportsController],

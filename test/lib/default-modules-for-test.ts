@@ -1,11 +1,18 @@
-import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import path from 'path'
+import { TYPEORM } from '../../src/config'
+import configuration from '../../src/config/configuration'
+import validationSchema from '../../src/config/validation-schema'
 
-import { TYPEORM } from '../config'
-
-export function getTypeOrmModule() {
-	return TypeOrmModule.forRootAsync({
+export const defaultModulesForTest = [
+	ConfigModule.forRoot({
+		isGlobal: true,
+		envFilePath: 'test/.env',
+		load: [configuration],
+		validationSchema,
+	}),
+	TypeOrmModule.forRootAsync({
 		imports: [ConfigModule],
 		useFactory: (configService: ConfigService) => ({
 			type: 'postgres',
@@ -15,9 +22,11 @@ export function getTypeOrmModule() {
 			username: configService.get(TYPEORM.USERNAME),
 			password: configService.get(TYPEORM.PASSWORD),
 
-			entities: [path.join(__dirname, '../typeorm/entities/*.{ts,js}')],
+			entities: [
+				path.join(__dirname, '../../src/typeorm/entities/*.{ts,js}'),
+			],
 			migrations: [
-				path.join(__dirname, '../typeorm/migrations/*.{ts,js}'),
+				path.join(__dirname, '../../src/typeorm/migrations/*.{ts,js}'),
 			],
 			migrationsRun: true,
 			keepConnectionAlive: true,
@@ -25,5 +34,5 @@ export function getTypeOrmModule() {
 			synchronize: false,
 		}),
 		inject: [ConfigService],
-	})
-}
+	}),
+]

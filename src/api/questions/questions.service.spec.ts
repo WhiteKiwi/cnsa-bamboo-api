@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsService } from './questions.service'
-import { getConfigModule, getTypeOrmModule } from '../../modules'
 import { sleep } from '../../../test/test-env/utils'
 
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
 import { Question } from '../../typeorm/entities'
+import { defaultModulesForTest } from '../../../test/lib'
 
 describe('QuestionsService', () => {
 	let service: QuestionsService
@@ -14,8 +14,7 @@ describe('QuestionsService', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			imports: [
-				getConfigModule({ test: true }),
-				getTypeOrmModule(),
+				...defaultModulesForTest,
 				TypeOrmModule.forFeature([Question]),
 			],
 			providers: [QuestionsService],

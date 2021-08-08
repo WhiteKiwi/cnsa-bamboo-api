@@ -1,8 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { defaultModulesForTest } from '../test/lib'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-
-import { getConfigModule, getTypeOrmModule } from './modules'
 
 describe('AppController', () => {
 	let controller: AppController
@@ -10,7 +9,7 @@ describe('AppController', () => {
 
 	beforeEach(async () => {
 		const app: TestingModule = await Test.createTestingModule({
-			imports: [getConfigModule({ test: true }), getTypeOrmModule()],
+			imports: [...defaultModulesForTest],
 			controllers: [AppController],
 			providers: [AppService],
 		}).compile()

@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { QuestionsController } from './questions.controller'
 import { QuestionsService } from './questions.service'
-import { getConfigModule, getTypeOrmModule } from '../../modules'
 import { sleep } from '../../../test/test-env/utils'
 import { createMockedResponse } from '../../../test/test-env/utils'
 
@@ -9,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
 import { Question } from '../../typeorm/entities'
 import { HttpStatus } from '@nestjs/common'
+import { defaultModulesForTest } from '../../../test/lib'
 
 describe('QuestionsController', () => {
 	let controller: QuestionsController
@@ -18,8 +18,7 @@ describe('QuestionsController', () => {
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
 			imports: [
-				getConfigModule({ test: true }),
-				getTypeOrmModule(),
+				...defaultModulesForTest,
 				TypeOrmModule.forFeature([Question]),
 			],
 			controllers: [QuestionsController],
