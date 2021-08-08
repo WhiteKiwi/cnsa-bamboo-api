@@ -5,12 +5,8 @@ import supertest from 'supertest'
 
 import { AppController } from '../../src/app.controller'
 import { AppService } from '../../src/app.service'
-import {
-	getCacheModule,
-	getConfigModule,
-	getTypeOrmModule,
-} from '../../src/modules'
-import { globalSetup } from './app-global-setup'
+import { defaultModulesForTest } from '../lib'
+import { globalAppSetup } from '../lib/global-app-setup'
 
 describe('AppController (e2e)', () => {
 	let app: INestApplication
@@ -19,17 +15,13 @@ describe('AppController (e2e)', () => {
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
-			imports: [
-				getConfigModule({ test: true }),
-				getTypeOrmModule(),
-				getCacheModule(),
-			],
+			imports: [...defaultModulesForTest],
 			controllers: [AppController],
 			providers: [AppService],
 		}).compile()
 
 		app = moduleFixture.createNestApplication()
-		globalSetup(app)
+		globalAppSetup(app)
 		await app.init()
 		request = supertest(app.getHttpServer())
 

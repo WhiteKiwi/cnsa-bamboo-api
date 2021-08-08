@@ -4,18 +4,14 @@ import { Test, TestingModule } from '@nestjs/testing'
 import supertest from 'supertest'
 import { getRepository, Repository } from 'typeorm'
 
-import { QuestionsController } from '../../src/api/questions/questions.controller'
-import { QuestionsModule } from '../../src/api/questions/questions.module'
 import { AppController } from '../../src/app.controller'
 import { AppService } from '../../src/app.service'
-import {
-	getCacheModule,
-	getConfigModule,
-	getTypeOrmModule,
-} from '../../src/modules'
+import { QuestionsController } from '../../src/modules/application/questions/questions.controller'
+import { QuestionsModule } from '../../src/modules/application/questions/questions.module'
 import { Question } from '../../src/typeorm/entities'
+import { defaultModulesForTest } from '../lib'
+import { globalAppSetup } from '../lib/global-app-setup'
 import { sleep } from '../test-env/utils'
-import { globalSetup } from './app-global-setup'
 
 describe('QuestionController (e2e)', () => {
 	let app: INestApplication
@@ -25,18 +21,13 @@ describe('QuestionController (e2e)', () => {
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
-			imports: [
-				getConfigModule({ test: true }),
-				getTypeOrmModule(),
-				getCacheModule(),
-				QuestionsModule,
-			],
+			imports: [...defaultModulesForTest, QuestionsModule],
 			controllers: [AppController],
 			providers: [AppService],
 		}).compile()
 
 		app = moduleFixture.createNestApplication()
-		globalSetup(app)
+		globalAppSetup(app)
 		await app.init()
 		request = supertest(app.getHttpServer())
 

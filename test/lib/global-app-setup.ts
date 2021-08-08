@@ -6,7 +6,7 @@ import helmet from 'helmet'
 import { exceptionFilters } from '../../src/utils/exception-filters'
 
 // Export for e2e testing modules
-export function globalSetup(app: INestApplication) {
+export function globalAppSetup(app: INestApplication) {
 	app.useGlobalFilters(...exceptionFilters)
 	app.useGlobalPipes(new ValidationPipe({ transform: true }))
 

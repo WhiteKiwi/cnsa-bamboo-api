@@ -3,17 +3,13 @@ import { Test, TestingModule } from '@nestjs/testing'
 
 import supertest from 'supertest'
 
-import { ReportsController } from '../../src/api/reports/reports.controller'
-import { ReportsModule } from '../../src/api/reports/reports.module'
 import { AppController } from '../../src/app.controller'
 import { AppService } from '../../src/app.service'
-import {
-	getCacheModule,
-	getConfigModule,
-	getTypeOrmModule,
-} from '../../src/modules'
+import { ReportsController } from '../../src/modules/application/reports/reports.controller'
+import { ReportsModule } from '../../src/modules/application/reports/reports.module'
 import { ReportStatus } from '../../src/utils/types'
-import { globalSetup } from './app-global-setup'
+import { defaultModulesForTest } from '../lib'
+import { globalAppSetup } from '../lib/global-app-setup'
 
 describe('ReportController (e2e)', () => {
 	let app: INestApplication
@@ -22,18 +18,13 @@ describe('ReportController (e2e)', () => {
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
-			imports: [
-				getConfigModule({ test: true }),
-				getTypeOrmModule(),
-				getCacheModule(),
-				ReportsModule,
-			],
+			imports: [...defaultModulesForTest, ReportsModule],
 			controllers: [AppController],
 			providers: [AppService],
 		}).compile()
 
 		app = moduleFixture.createNestApplication()
-		globalSetup(app)
+		globalAppSetup(app)
 		await app.init()
 		request = supertest(app.getHttpServer())
 
