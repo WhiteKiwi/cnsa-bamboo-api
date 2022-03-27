@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: develop
-      url: https://cnsa-bamboo-api.dev.whitekiwi-test.com
+      url: https://cnsa-bamboo-api.dev.whitekiwi.link
 
     steps:
       - name: Checkout
